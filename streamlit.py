@@ -14,7 +14,11 @@ local_css("style.css")
 
 #ticker search feature in sidebar
 st.sidebar.subheader("""Crypto Dashboard""")
-selected_stock = st.sidebar.text_input("Enter a valid crypto or stock code...", "BTC")
+
+selected_stock = st.selectbox(
+'Which coin do you want?',
+('BTC', 'LTC', 'ETH'))
+
 button_clicked = st.sidebar.button("Choose coin")
 if button_clicked == "Choose coin":
     main()
@@ -39,8 +43,8 @@ def main():
     stock_lastprice = yf.download(selected_stock+'-USD',today, today)
     #get current date closing price for searched ticker
     predicted_price = (stock_lastprice.Close)+1
-    st.write("""Yesterday's price: """ + stock_lastprice)
-    st.write("""Prediction for tomorrow: """ + predicted_price)
+    st.write('Yesterday\'s price: ' + stock_lastprice)
+    st.write('Prediction for tomorrow: ' + predicted_price)
         
     #get daily volume for searched ticker
     st.subheader("""Daily **volume** for """ + selected_stock)
