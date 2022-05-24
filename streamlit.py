@@ -19,9 +19,9 @@ selected_stock = st.selectbox(
 'Which coin do you want?',
 ('BTC', 'LTC', 'ETH'))
 
-button_clicked = st.sidebar.button("Choose coin")
-if button_clicked == "Choose coin":
-    main()
+#button_clicked = st.sidebar.button("Choose coin")
+#if button_clicked == "Choose coin":
+#    main()
 
 #main function
 def main():
