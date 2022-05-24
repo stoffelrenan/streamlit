@@ -40,7 +40,7 @@ def main():
     #predicted_price = (stock_lastprice.Close)+1
     #st.write('Yesterday\'s price: ' + stock_lastprice)
     #st.write('Prediction for tomorrow: ' + predicted_price)
-    st.write(stock_lastprice)
+    st.write(stock_lastprice.Close)
         
     #get daily volume for searched ticker
     st.subheader("""Daily **volume** for """ + selected_stock)
