@@ -19,19 +19,16 @@ selected_stock = st.selectbox(
 'Which coin do you want?',
 ('BTC', 'LTC', 'ETH'))
 
-#button_clicked = st.sidebar.button("Choose coin")
-#if button_clicked == "Choose coin":
-#    main()
+button_clicked = st.sidebar.button("Choose coin")
+if button_clicked == "Choose coin":
+    main()
 
 #main function
 def main():
     st.subheader("""Daily **closing price** for """ + selected_stock)
     #get data on searched ticker
-    try:
-        data = yf.download(tickers=selected_stock+'-USD', period = '5y', interval = '1d')
-        data.name=selected_stock
-    except ValueError:
-        st.error('Please enter a valid asset name')
+    data = yf.download(tickers=selected_stock+'-USD', period = '5y', interval = '1d')
+    data.name=selected_stock
 
     #print line chart with daily closing prices for searched ticker
     st.line_chart(data.Close)
