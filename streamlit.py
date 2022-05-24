@@ -33,12 +33,14 @@ def main():
 
     st.subheader("""Predicted **closing price of tomorrow** for """ + selected_stock)
     #define variable today 
-    today = datetime.today().strftime('%Y-%m-%d')
+
     #get current date data for searched ticker
-    stock_lastprice = yf.download(selected_stock+'-USD',today, today)
+    current_price = yf.Ticker(selected_stock+'-USD')
+    current_price = current_price.info['regularMarketPrice']
+    
     #get current date closing price for searched ticker
-    predicted_price = float(stock_lastprice.iloc[0]['Close'])
-    st.write('Yesterday\'s price: ' + str(round(stock_lastprice.iloc[0]['Close'],2)))
+    predicted_price = '33'
+    st.write('Current price: ' + str(round(current_price,2)))
     st.write('Prediction for tomorrow: ' + str(round(predicted_price,2)))
 
     #get daily volume for searched ticker
