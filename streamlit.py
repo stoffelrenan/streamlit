@@ -22,7 +22,7 @@ local_css("style.css")
 #ticker search feature in sidebar
 st.sidebar.subheader("""Crypto Dashboard""")
 
-selected_stock = st.selectbox('Which coin do you want?',('BTC', 'LTC', 'ETH'))
+selected_stock = st.sidebar.selectbox('Which coin do you want?',('BTC', 'LTC', 'ETH'))
 
 button_clicked = st.sidebar.button("Choose coin")
 if button_clicked == "Choose coin":
