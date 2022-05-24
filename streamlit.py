@@ -27,7 +27,7 @@ def main():
         data = yf.download(tickers=selected_stock+'-USD', period = '5y', interval = '1d')
         data.name=selected_stock
     except ValueError:
-        st.error(‘Please enter a valid asset name’)
+        st.error('Please enter a valid asset name')
 
     #print line chart with daily closing prices for searched ticker
     st.line_chart(data.Close)
