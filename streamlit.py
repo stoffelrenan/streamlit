@@ -23,7 +23,7 @@ local_css("style.css")
 
 #ticker search feature in sidebar
 st.sidebar.subheader("""Crypto Dashboard""")
-crypto_list['ADA','ATOM','AVAX','AXS','BTC','ETH','LINK','LUNA1','MATIC','SOL']
+crypto_list = ['ADA','ATOM','AVAX','AXS','BTC','ETH','LINK','LUNA1','MATIC','SOL']
 selected_stock = st.sidebar.selectbox('Which coin do you want?',crypto_list)
 
 #button_clicked = st.sidebar.button("Choose coin")
