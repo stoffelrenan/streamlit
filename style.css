@@ -10,6 +10,6 @@ body {
     width: 6em;
 }
 
-.stSelectBox>div>div>input {
+.stSelectBox>div>div>selectbox {
     color: #4F8BF9;
 }
