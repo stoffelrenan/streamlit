@@ -33,13 +33,13 @@ def main():
     #define variable today 
     today = datetime.today().strftime('%Y-%m-%d')
     #get current date data for searched ticker
-    stock_lastprice = stock_data.history(period='1d', start=today, end=today)
+    stock_lastprice = data.history(period='1d', start=today, end=today)
     #get current date closing price for searched ticker
     predicted_price = (stock_lastprice.Close)+1
         
     #get daily volume for searched ticker
     st.subheader("""Daily **volume** for """ + selected_stock)
-    st.line_chart(stock_df.Volume)
+    st.line_chart(data.Volume)
 
 
 if __name__ == "__main__":
