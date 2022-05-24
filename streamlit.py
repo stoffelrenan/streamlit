@@ -155,7 +155,7 @@ def main():
     #print line chart with daily closing prices for searched ticker
     #st.line_chart(data.Close)
     fig = go.Figure()
-    fig.add_trace(go.Candlestick(x=data['Date'], open=data['Open'], high=data['High'], low=data['Low'], close=data['Close']) )
+    fig.add_trace(go.Candlestick(x=data.index, open=data['Open'], high=data['High'], low=data['Low'], close=data['Close']) )
 
     st.plotly_chart(fig)
 
