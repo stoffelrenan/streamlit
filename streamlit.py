@@ -24,9 +24,9 @@ st.sidebar.subheader("""Crypto Dashboard""")
 
 selected_stock = st.sidebar.selectbox('Which coin do you want?',('BTC', 'LTC', 'ETH'))
 
-button_clicked = st.sidebar.button("Choose coin")
-if button_clicked == "Choose coin":
-    main()
+#button_clicked = st.sidebar.button("Choose coin")
+#if button_clicked == "Choose coin":
+#    main()
 
     #Macro function to predict the next 2 days for a certain coin.
 #Returns list with the outputs for the 2 days
