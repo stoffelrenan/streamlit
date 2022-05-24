@@ -10,6 +10,8 @@ from keras.models import Sequential,Model
 from tensorflow import keras
 import keras
 
+import plotly.graph_objects as go
+
 
 #function calling local css sheet
 def local_css(file_name):
@@ -151,7 +153,11 @@ def main():
     data.name=selected_stock
 
     #print line chart with daily closing prices for searched ticker
-    st.line_chart(data.Close)
+    #st.line_chart(data.Close)
+    fig = go.Figure()
+    fig.add_trace(go.Candlestick(x=data['Date'], open=data['Open'], high=data['High'], low=data['Low'], close=data['Close']) )
+
+    st.plotly_chart(fig)
 
     st.subheader("""Predicted **closing price of tomorrow** for """ + selected_stock)
     #define variable today 
@@ -164,10 +170,6 @@ def main():
     predicted_price = predict_coin(data.name,data)
     st.write('Current price: ' + str(round(current_price,3)))
     st.write('Prediction for tomorrow: ' + str(round(predicted_price[0][0],2)))
-
-    #get daily volume for searched ticker
-    st.subheader("""Daily **volume** for """ + selected_stock)
-    st.line_chart(data.Volume)
 
 
 if __name__ == "__main__":
