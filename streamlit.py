@@ -23,8 +23,8 @@ if button_clicked == "Choose coin":
 def main():
     st.subheader("""Daily **closing price** for """ + selected_stock)
     #get data on searched ticker
-    data = yf.download(tickers=currency+'-USD', period = '5y', interval = '1d')
-    data.name=currency
+    data = yf.download(tickers=selected_stock+'-USD', period = '5y', interval = '1d')
+    data.name=selected_stock
 
     #print line chart with daily closing prices for searched ticker
     st.line_chart(data.Close)
