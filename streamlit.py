@@ -30,14 +30,7 @@ if button_clicked == "Choose coin":
 
     #Macro function to predict the next 2 days for a certain coin.
 #Returns list with the outputs for the 2 days
-'''
-Parameters:
-name - String with the name of the coin
-df - dataframe for the coin
-days - how many days to use as basis for predicting (standard: 2)
-epochs - how many epochs for the LSTM to run (standard: 30)
 
-'''
 #DF preparing functions for Close and High, also splitting the training/test dataset
 def lstm_close(curr):
     df=curr.reset_index()['Close']
