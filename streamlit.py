@@ -55,7 +55,7 @@ def create_dataset(dataset, time_step):
         data_y.append(dataset[i + time_step, 0])
     return np.array(data_x), np.array(data_y)
 
-def predict_coin(name,df,days=2,epochs=30):
+def predict_coin(name,df,days=1,epochs=10):
     
     scaler,df1 = lstm_close(df)
     
@@ -79,18 +79,15 @@ def predict_coin(name,df,days=2,epochs=30):
     #Create LSTM model using layers and dropout to avoid overfitting
     model=Sequential()
     model.add(LSTM(50,activation='relu',return_sequences=True,input_shape=(days,1)))
-    model.add(Dropout(0.2))
     model.add(LSTM(50,return_sequences=True))
-    model.add(Dropout(0.2))
     model.add(LSTM(50))
-    model.add(Dropout(0.2))
     model.add(Dense(1))
     model.compile(loss='mean_squared_error', optimizer='adam')
     
    
     #Fit the model and predict for X_train and X_test. 
     #After that, present the RMSE for train and test
-    model.fit(X_train, y_train, validation_data=(X_test,y_test),epochs=epochs, batch_size=64,verbose=0)
+    model.fit(X_train, y_train, validation_data=(X_test,y_test),epochs=epochs, batch_size=32,verbose=0)
     
     train_predict=model.predict(X_train)
     test_predict=model.predict(X_test)
