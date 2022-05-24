@@ -2,3 +2,4 @@ yfinance
 sklearn
 tensorflow
 keras
+plotly
