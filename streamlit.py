@@ -23,8 +23,11 @@ if button_clicked == "Choose coin":
 def main():
     st.subheader("""Daily **closing price** for """ + selected_stock)
     #get data on searched ticker
-    data = yf.download(tickers=selected_stock+'-USD', period = '5y', interval = '1d')
-    data.name=selected_stock
+    try:
+        data = yf.download(tickers=selected_stock+'-USD', period = '5y', interval = '1d')
+        data.name=selected_stock
+    except ValueError:
+        st.error(‘Please enter a valid asset name’)
 
     #print line chart with daily closing prices for searched ticker
     st.line_chart(data.Close)
@@ -33,7 +36,7 @@ def main():
     #define variable today 
     today = datetime.today().strftime('%Y-%m-%d')
     #get current date data for searched ticker
-    stock_lastprice = data.history(period='1d', start=today, end=today)
+    stock_lastprice = yf.download(selected_stock+'-USD',today, today)
     #get current date closing price for searched ticker
     predicted_price = (stock_lastprice.Close)+1
         
