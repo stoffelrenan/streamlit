@@ -39,7 +39,7 @@ def main():
     #get current date closing price for searched ticker
     predicted_price = float(stock_lastprice.Close)+1
     st.write('Yesterday\'s price: ' + float(stock_lastprice.Close))
-    st.write('Prediction for tomorrow: ' + float(predicted_price.Close))
+    st.write('Prediction for tomorrow: ' + predicted_price)
     
         
     #get daily volume for searched ticker
