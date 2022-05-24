@@ -173,7 +173,7 @@ def main():
     #get current date closing price for searched ticker
     predicted_price = predict_coin(data.name,data)
     st.write('Current price: ' + str(round(current_price,3)))
-    st.write('Prediction for tomorrow: ' + str(round(predicted_price,2)))
+    st.write('Prediction for tomorrow: ' + str(predicted_price))
 
     #get daily volume for searched ticker
     st.subheader("""Daily **volume** for """ + selected_stock)
