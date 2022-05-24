@@ -37,7 +37,7 @@ def main():
     #get current date data for searched ticker
     stock_lastprice = yf.download(selected_stock+'-USD',today, today)
     #get current date closing price for searched ticker
-    predicted_price = float(stock_lastprice.Close)+1
+    predicted_price = float(stock_lastprice.Close)
     st.write('Yesterday\'s price: ' + float(stock_lastprice.Close))
     st.write('Prediction for tomorrow: ' + predicted_price)
     
