@@ -1,5 +1,5 @@
 yfinance
-sklearn
+sklearn.preprocessing
 sklearn.metrics
 tensorflow
 keras
