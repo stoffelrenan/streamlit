@@ -1,7 +1,6 @@
 yfinance
 pip==22.1.1
-sklearn.preprocessing
-sklearn.metrics
+sklearn
 tensorflow
 keras
 plotly
