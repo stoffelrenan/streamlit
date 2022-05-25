@@ -21,16 +21,14 @@ def local_css(file_name):
 #local css sheet
 local_css("style.css")
 
-#ticker search feature in sidebar
-st.sidebar.subheader("""Crypto Dashboard""")
-crypto_list = ['ADA','ATOM','AVAX','AXS','BTC','ETH','LINK','LUNA1','MATIC','SOL']
-selected_stock = st.sidebar.selectbox('Which coin do you want?',crypto_list)
+#Select the coin
+st.sidebar.subheader("""Stock Search Web App""")
+selected_stock = st.sidebar.text_input("Enter a valid asset name...", "BTC")
+button_clicked = st.sidebar.button("Select asset")
+if button_clicked == "Select asset":
+    main()
 
-#button_clicked = st.sidebar.button("Choose coin")
-#if button_clicked == "Choose coin":
-#    main()
-
-    #Macro function to predict the next 2 days for a certain coin.
+#Macro function to predict the next 2 days for a certain coin.
 #Returns list with the outputs for the 2 days
 
 #DF preparing functions for Close and High, also splitting the training/test dataset
