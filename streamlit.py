@@ -126,10 +126,9 @@ def main():
 
     #print line chart with daily closing prices for searched ticker
     #st.line_chart(data.Close)
-    fig = go.Figure()
-    fig.add_trace(go.Candlestick(x=data.index, open=data['Open'], high=data['High'], low=data['Low'], close=data['Close']) )
-
-    st.plotly_chart(fig)
+    #fig = go.Figure()
+    #fig.add_trace(go.Candlestick(x=data.index, open=data['Open'], high=data['High'], low=data['Low'], close=data['Close']) )
+    #st.plotly_chart(fig)
 
     st.subheader("""Predicted **closing price of tomorrow** for """ + selected_stock)
     #define variable today 
