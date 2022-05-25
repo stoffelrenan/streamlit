@@ -88,7 +88,7 @@ def predict_coin(curr,df, date = '2021-07-01', time_step=5):
     
     #get predictions
     predictions = my_model2.predict(X_test)
-    scaled_rmse = math.sqrt(mean_squared_error(y_test, predictions))
+    #scaled_rmse = math.sqrt(mean_squared_error(y_test, predictions))
     
     train_predict=my_model2.predict(X_train)
     test_predict=my_model2.predict(X_test)
@@ -103,8 +103,8 @@ def predict_coin(curr,df, date = '2021-07-01', time_step=5):
     original_ytest = scaler_y.inverse_transform(y_test.reshape(-1,1)) 
     
     #get unscaled rmse 
-    RMSE = math.sqrt(mean_squared_error(original_ytest, test_predict))
-    trainRMSE = math.sqrt(mean_squared_error(original_ytrain, train_predict))
+    #RMSE = math.sqrt(mean_squared_error(original_ytest, test_predict))
+    #trainRMSE = math.sqrt(mean_squared_error(original_ytrain, train_predict))
     
     #Predicting tomorrow
     tomorrow_scaled = my_model2.predict(X_test)[-1]
