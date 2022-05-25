@@ -140,8 +140,8 @@ def main():
     #get current date closing price for searched ticker
     predicted_price_one, predicted_price_two = predict_coin(data.name,data)
     st.write('Current price: ' + str(round(current_price,3)))
-    st.write('Prediction for tomorrow: ' + str(predicted_price_one)
-    st.write('Prediction for the day after tomorrow: ' + str(predicted_price_two)
+    st.write('Prediction for tomorrow: ' + str(predicted_price_one))
+    st.write('Prediction for the day after tomorrow: ' + str(predicted_price_two))
 
 
 if __name__ == "__main__":
