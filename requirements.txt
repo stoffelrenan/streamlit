@@ -3,3 +3,6 @@ sklearn
 tensorflow
 keras
 plotly
+xgboost
+math
+matplotlib
