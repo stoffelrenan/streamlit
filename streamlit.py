@@ -35,7 +35,7 @@ def predict_coin(curr,df, date = '2021-07-01', time_step=5):
     df = ta.add_all_ta_features(df, "Open", "High", "Low", "Close", "Volume", fillna=True)
     df = df.rename(columns={'Date': 'date','Open':'open','High':'high','Low':'low','Close':'close',
                                 'Adj Close':'adj_close','Volume':'volume'})
-    df['date'] = pd.to_datetime(df['date'])
+    df['date'] = pd.to_datetime(df.date)
     
     #create dataframe with needed features
     closedf = df[['date','close',"trend_macd"]]
@@ -123,12 +123,13 @@ def main():
     #get data on searched ticker
     data = yf.download(tickers=selected_stock+'-USD', period = '5y', interval = '1d')
     data.name=selected_stock
+    data.reset_index(inplace=True)
 
     #print line chart with daily closing prices for searched ticker
     #st.line_chart(data.Close)
-    #fig = go.Figure()
-    #fig.add_trace(go.Candlestick(x=data.index, open=data['Open'], high=data['High'], low=data['Low'], close=data['Close']) )
-    #st.plotly_chart(fig)
+    fig = go.Figure()
+    fig.add_trace(go.Candlestick(x=data.index, open=data['Open'], high=data['High'], low=data['Low'], close=data['Close']) )
+    st.plotly_chart(fig)
 
     st.subheader("""Predicted **closing price of tomorrow** for """ + selected_stock)
     #define variable today 
