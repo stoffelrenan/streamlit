@@ -29,6 +29,15 @@ selected_stock = st.sidebar.text_input("Enter a valid asset name...", "BTC")
 button_clicked = st.sidebar.button("Select asset")
 if button_clicked == "Select asset":
     main()
+    
+# convert an array of values into a dataset matrix
+def create_dataset(dataset, time_step=1):
+    dataX, dataY = [], []
+    for i in range(len(dataset)-time_step-1):
+        a = dataset.iloc[i:(i+time_step), 0]   ###i=0, 0,1,2,3-----99   100 
+        dataX.append(a)
+        dataY.append(dataset.iloc[i + time_step, 0])
+    return np.array(dataX), np.array(dataY)
 
 def predict_coin(curr,df, date = '2021-07-01', time_step=5):
     df = df.copy()
