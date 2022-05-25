@@ -1,5 +1,6 @@
 yfinance
 sklearn
+sklearn.metrics
 tensorflow
 keras
 plotly
