@@ -22,126 +22,98 @@ def local_css(file_name):
 local_css("style.css")
 
 #Select the coin
-st.sidebar.subheader("""Stock Search Web App""")
+st.sidebar.subheader("""Crypto+Asset Dashboards""")
 selected_stock = st.sidebar.text_input("Enter a valid asset name...", "BTC")
 button_clicked = st.sidebar.button("Select asset")
 if button_clicked == "Select asset":
     main()
 
-#Macro function to predict the next 2 days for a certain coin.
-#Returns list with the outputs for the 2 days
+def predict_coin(curr,df, date = '2021-07-01', time_step=5):
+    df = df.copy()
+    df = ta.add_all_ta_features(df, "Open", "High", "Low", "Close", "Volume", fillna=True)
+    df = df.rename(columns={'Date': 'date','Open':'open','High':'high','Low':'low','Close':'close',
+                                'Adj Close':'adj_close','Volume':'volume'})
+    df['date'] = pd.to_datetime(df.date)
+    
+    #create dataframe with needed features
+    closedf = df[['date','close',"trend_macd"]]
+    
+    closedf = closedf[closedf['date'] > date]
+    close_stock = closedf.copy()
 
-#DF preparing functions for Close and High, also splitting the training/test dataset
-def lstm_close(curr):
-    df=curr.reset_index()['Close']
-    scaler=MinMaxScaler(feature_range=(0,1))
-    df = np.array(df).reshape(-1,1)
-    #df=scaler.fit_transform(np.array(df).reshape(-1,1))
-    return scaler,df
+    #set training size
+    training_size=int(len(closedf)*0.80)
+    test_size=len(closedf)-training_size
+    train_data,test_data=closedf.iloc[0:training_size,:],closedf.iloc[training_size:len(closedf),:]
+    
+    #normalize price
+    del train_data['date']
+    del test_data['date']
+    scaler = MinMaxScaler()
+    scaler_y = MinMaxScaler().fit(np.array(train_data['close']).reshape(-1,1)) 
+    scaler.fit(train_data)
+    X_train_scaled = pd.DataFrame(scaler.transform(train_data)) 
+    X_test_scaled = pd.DataFrame(scaler.transform(test_data))
+    
+    #create the looped datasets for "close"
+    X_train, y_train = create_dataset(X_train_scaled, time_step)
+    X_test, y_test = create_dataset(X_test_scaled, time_step)
+    
+    #convert to dataframes
+    X_train = pd.DataFrame(X_train)
+    X_test = pd.DataFrame(X_test)
 
-#Split df using % of choice
-def split_df(df):
-    training_size=int(len(df)*0.95)
-    test_size=len(df)-training_size
-    train_data,test_data=df[0:training_size,:],df[training_size:len(df),:1]
-    return train_data,test_data
+    #append variables
+    X_train = pd.concat([X_train, X_train_scaled.iloc[time_step + 1:,1:].reset_index(drop=True)], axis = 1, ignore_index = True)
+    X_test = pd.concat([X_test, X_test_scaled.iloc[time_step + 1:,1:].reset_index(drop=True)], axis = 1, ignore_index = True)
 
-#Using the provided data, create a dataset of sequential values using a timestep (number of days chosen)
-def create_dataset(dataset, time_step):
-    data_x, data_y = [], []
-    for i in range(len(dataset)-time_step-1):
-        a = dataset[i:(i+time_step), 0]
-        data_x.append(a)
-        data_y.append(dataset[i + time_step, 0])
-    return np.array(data_x), np.array(data_y)
+    #convert back to array
+    X_train = X_train.to_numpy()
+    X_test = X_test.to_numpy()
+    
+    #build model
+    my_model2 = XGBRegressor(n_estimators=1000)
+    my_model2.fit(X_train, y_train, verbose=True)
+    
+    #get predictions
+    predictions = my_model2.predict(X_test)
+    scaled_rmse = math.sqrt(mean_squared_error(y_test, predictions))
+    
+    train_predict=my_model2.predict(X_train)
+    test_predict=my_model2.predict(X_test)
 
-def predict_coin(name,df,days=1,epochs=10):
-    
-    scaler,df1 = lstm_close(df)
-    
-    #Split dataframe in train test
-    train_data, test_data = split_df(df1)
-    
-    scaler=scaler.fit(train_data)
-    train_data = scaler.transform(train_data)
-    test_data = scaler.transform(test_data)
+    train_predict = train_predict.reshape(-1,1)
+    test_predict = test_predict.reshape(-1,1)
 
+    # Transform back to original form
+    train_predict = scaler_y.inverse_transform(train_predict)
+    test_predict = scaler_y.inverse_transform(test_predict)
+    original_ytrain = scaler_y.inverse_transform(y_train.reshape(-1,1)) 
+    original_ytest = scaler_y.inverse_transform(y_test.reshape(-1,1)) 
     
-    #Set timestep of n days and create datasets to train
-    time_step = days
-    X_train, y_train = create_dataset(train_data, time_step)
-    X_test, y_test = create_dataset(test_data, time_step)
+    #get unscaled rmse 
+    RMSE = math.sqrt(mean_squared_error(original_ytest, test_predict))
+    trainRMSE = math.sqrt(mean_squared_error(original_ytrain, train_predict))
     
-    #Reshaping the input as required for LSTM
-    X_train = X_train.reshape(X_train.shape[0], X_train.shape[1], 1)
-    X_test = X_test.reshape(X_test.shape[0], X_test.shape[1], 1)
-        
-    #Create LSTM model using layers and dropout to avoid overfitting
-    model=Sequential()
-    model.add(LSTM(50,activation='relu',return_sequences=True,input_shape=(days,1)))
-    model.add(LSTM(50,return_sequences=True))
-    model.add(LSTM(50))
-    model.add(Dense(1))
-    model.compile(loss='mean_squared_error', optimizer='adam')
+    #Predicting tomorrow
+    tomorrow_scaled = my_model2.predict(X_test)[-1]
+    tomorrow = scaler_y.inverse_transform(tomorrow_scaled.reshape(-1,1)) 
     
-   
-    #Fit the model and predict for X_train and X_test. 
-    #After that, present the RMSE for train and test
-    model.fit(X_train, y_train, validation_data=(X_test,y_test),epochs=epochs, batch_size=32,verbose=0)
+    #Predicting day after tomorrow
+    appended_X_test_scaled = X_test_scaled.append([float(tomorrow_scaled)], ignore_index = True)
+    X_test_append, y_test_append = create_dataset(appended_X_test_scaled, time_step)
     
-    train_predict=model.predict(X_train)
-    test_predict=model.predict(X_test)
+    #adding tomorrows variables to dataframe 
+    X_test_append = pd.DataFrame(X_test_append)
+    X_test_append = pd.concat([X_test_append, X_test_scaled.iloc[time_step + 1:,1:].reset_index(drop=True)], axis = 1, ignore_index = True).fillna(method="ffill")
     
-    #Reshaping and inverse transforming to calculate non scaled RMSE
-    test_predict=scaler.inverse_transform(test_predict)
-    train_predict=scaler.inverse_transform(train_predict)
-    y_test=scaler.inverse_transform(y_test.reshape(-1, 1))
-    testdf = pd.DataFrame()
-    testdf['y_test'] = list(y_test)
-    testdf['predict'] = list(test_predict)
-
-    #Plotting
-    # Train predictions plot
-    look_back=days
-    trainPredictPlot = np.empty_like(df1)
-    trainPredictPlot[:,:] = np.nan
-    trainPredictPlot[look_back:len(train_predict)+look_back, :] = train_predict
+    #predicting day after tomorrow 
+    tomorrow_tomorrow_scaled = my_model2.predict(X_test_append)[-1]
+    tomorrow_tomorrow = scaler_y.inverse_transform(tomorrow_tomorrow_scaled.reshape(-1,1)) 
     
-    # Test predictions plot
-    testPredictPlot = np.empty_like(df1)
-    testPredictPlot[:,:] = np.nan
-    testPredictPlot[len(train_predict)+(look_back*2)+1:len(df1)-1, :] = test_predict
-   
-    #Reshaping only the last n values for test data
-    x_input=test_data[len(test_data)-days:].reshape(1,-1)
-    x_input.shape
-    
-    #Prepare list for the loop predictions
-    temp_input=list(x_input)
-    temp_input=temp_input[0].tolist()
-    
-#Predict the next 2 days (change value of i if want more days)
-    lst_output=[]
-    n_steps=days
-    i=0
-    while(i<1):
-        if(len(temp_input)>days):
-            x_input=np.array(temp_input[1:])
-            x_input=x_input.reshape(1,-1)
-            x_input = x_input.reshape((1, n_steps, 1))
-            predictions=model.predict(x_input, verbose=0)
-            temp_input.extend(predictions[0].tolist())
-            temp_input=temp_input[1:]
-            lst_output.extend(predictions.tolist())
-            i=i+1
-        else:
-            x_input = x_input.reshape((1,n_steps,1))
-            predictions = model.predict(x_input,verbose=0)
-            temp_input.extend(predictions[0].tolist())
-            lst_output.extend(predictions.tolist())
-            i=i+1
-    lst_output = scaler.inverse_transform(lst_output)
-    return lst_output
+    #create output
+    #output = [curr,round(RMSE,4),round(trainRMSE,4), round(float(tomorrow),4), round(float(tomorrow_tomorrow),4) ]
+    return round(float(tomorrow),4), round(float(tomorrow_tomorrow),4)
     
 #main function
 def main():
@@ -165,9 +137,10 @@ def main():
     current_price = current_price.info['regularMarketPrice']
     
     #get current date closing price for searched ticker
-    predicted_price = predict_coin(data.name,data)
+    predicted_price_one, predicted_price_two = predict_coin(data.name,data)
     st.write('Current price: ' + str(round(current_price,3)))
-    st.write('Prediction for tomorrow: ' + str(round(predicted_price[0][0],2)))
+    st.write('Prediction for tomorrow: ' + str(predicted_price_one)
+    st.write('Prediction for the day after tomorrow: ' + str(predicted_price_two)
 
 
 if __name__ == "__main__":
