@@ -35,7 +35,7 @@ def predict_coin(curr,df, date = '2021-07-01', time_step=5):
     df = ta.add_all_ta_features(df, "Open", "High", "Low", "Close", "Volume", fillna=True)
     df = df.rename(columns={'Date': 'date','Open':'open','High':'high','Low':'low','Close':'close',
                                 'Adj Close':'adj_close','Volume':'volume'})
-    df['date'] = pd.to_datetime(df.date)
+    df['date'] = pd.to_datetime(df['date'])
     
     #create dataframe with needed features
     closedf = df[['date','close',"trend_macd"]]
