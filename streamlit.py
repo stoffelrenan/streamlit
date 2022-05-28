@@ -155,7 +155,6 @@ def main():
 
     with row1_4:
         st.write("**Something else**")
-        map(filterdata(data, hour_selected), newark[0], newark[1], zoom_level)
 
     st.subheader("""Daily **closing price** for """ + selected_stock)
 
