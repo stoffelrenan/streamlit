@@ -128,11 +128,36 @@ def predict_coin(curr,df, date = '2021-07-01', time_step=5):
     
 #main function
 def main():
-    st.subheader("""Daily **closing price** for """ + selected_stock)
+    st.title("Coin Dashboard")
     #get data on searched ticker
     data = yf.download(tickers=selected_stock+'-USD', period = '5y', interval = '1d')
     data.name=selected_stock
     data.reset_index(inplace=True)
+
+    # get current date data for searched ticker
+    current_price = yf.Ticker(selected_stock + '-USD')
+    current_price = current_price.info['regularMarketPrice']
+
+    # get current date closing price for searched ticker
+    predicted_price_one, predicted_price_two = predict_coin(data.name, data)
+
+    #defining 4 cards
+    row1_1, row1_2, row1_3, row1_4 = st.columns((1, 1, 1, 1))
+
+    with row1_1:
+        st.write('Current price: ' + str(round(current_price,3)))
+
+    with row1_2:
+        st.write('Prediction for tomorrow: ' + str(predicted_price_one))
+
+    with row1_3:
+        st.write('Prediction for the day after tomorrow: ' + str(predicted_price_two))
+
+    with row1_4:
+        st.write("**Something else**")
+        map(filterdata(data, hour_selected), newark[0], newark[1], zoom_level)
+
+    st.subheader("""Daily **closing price** for """ + selected_stock)
 
     #print line chart with daily closing prices for searched ticker
     #st.line_chart(data.Close)
@@ -141,14 +166,8 @@ def main():
     st.plotly_chart(fig)
 
     st.subheader("""Predicted **closing price of tomorrow** for """ + selected_stock)
-    #define variable today 
+    #define variable today
 
-    #get current date data for searched ticker
-    current_price = yf.Ticker(selected_stock+'-USD')
-    current_price = current_price.info['regularMarketPrice']
-    
-    #get current date closing price for searched ticker
-    predicted_price_one, predicted_price_two = predict_coin(data.name,data)
     st.write('Current price: ' + str(round(current_price,3)))
     st.write('Prediction for tomorrow: ' + str(predicted_price_one))
     st.write('Prediction for the day after tomorrow: ' + str(predicted_price_two))
