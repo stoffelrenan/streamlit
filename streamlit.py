@@ -26,7 +26,7 @@ local_css("style.css")
 #Select the coin
 st.sidebar.subheader("""Crypto+Asset Dashboards""")
 selected_stock = st.sidebar.text_input("Enter a valid asset name...", "BTC")
-button_clicked = st.sidebar.button("Select asset")
+button_clicked = st.sidebar.button("Select Asset")
 if button_clicked == "Select Asset":
     main()
     
