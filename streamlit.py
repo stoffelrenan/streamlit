@@ -125,7 +125,57 @@ def predict_coin(curr,df, date = '2021-07-01', time_step=5):
     #create output
     #output = [curr,round(RMSE,4),round(trainRMSE,4), round(float(tomorrow),4), round(float(tomorrow_tomorrow),4) ]
     return round(float(tomorrow),4), round(float(tomorrow_tomorrow),4)
-    
+
+
+def moving_average(data):
+    trace1 = dict(type='scatter',
+                  x=data.index,
+                  y=data['close'],
+                  name='Close Price'
+                  )
+
+    trace2 = dict(type='scatter',
+                  x=data.index,
+                  y=data['macd'],
+                  name='MACD Line'
+                  )
+
+    trace3 = dict(type='scatter',
+                  x=data.index,
+                  y=data['macds'],
+                  name='MACD Signal Line'
+                  )
+
+    # Setting color for the MACD bar
+    y = np.array(data["macdh"])
+    color = np.array(["rgb(255,255,255)"] * y.shape[0])
+    color[y < 0] = "firebrick"
+    color[y >= 0] = "green"
+
+    trace4 = go.Bar(
+        x=data.index,
+        y=data["macdh"],
+        marker=dict(color=color.tolist()),
+        opacity=1,
+        name='MACD Histogram'
+    )
+    # trace4 = dict(type='scatter',
+    #                  x=data.index,
+    #                  y=data['macdh'],
+    #                 name='MACD Histogram'
+    #          )
+
+    data_macd = [trace1, trace2, trace3, trace4]
+
+    layout = dict(title=dict(text=data.name + ' MACD Strategy'),
+                  xaxis=dict(title='Date'),
+                  yaxis=dict(title=data.name + ' MACD')
+                  )
+
+    fig = go.Figure(data=data_macd, layout=layout)
+    return fig
+
+
 #main function
 def main():
     st.title("Asset Dashboard: "+ selected_stock)
@@ -176,16 +226,13 @@ def main():
     fig_1 = go.Figure(data=data_1, layout=layout_1)
     st.plotly_chart(fig_1)
 
-    #MACD
+    #MACD graph
+    st.subheader("""MACD plot for """ + selected_stock)
+    fig_2 = moving_average(data)
+    st.plotly_chart(fig_2)
     
-
-
-    st.subheader("""Predicted **closing price of tomorrow** for """ + selected_stock)
     #define variable today
 
-    st.write('Current price: ' + str(round(current_price,3)))
-    st.write('Prediction for tomorrow: ' + str(predicted_price_one))
-    st.write('Prediction for the day after tomorrow: ' + str(predicted_price_two))
 
 
 if __name__ == "__main__":
