@@ -24,7 +24,7 @@ def local_css(file_name):
 local_css("style.css")
 
 #Select the coin
-st.sidebar.subheader("""Crypto+Asset Dashboards""")
+st.sidebar.subheader("""Asset Dashboards""")
 selected_stock = st.sidebar.text_input("Enter a valid asset name...", "BTC")
 button_clicked = st.sidebar.button("Select Asset")
 if button_clicked == "Select Asset":
@@ -128,7 +128,7 @@ def predict_coin(curr,df, date = '2021-07-01', time_step=5):
     
 #main function
 def main():
-    st.title("Coin Dashboard")
+    st.title("Asset Dashboard: ")
     #get data on searched ticker
     data = yf.download(tickers=selected_stock+'-USD', period = '5y', interval = '1d')
     data.name=selected_stock
