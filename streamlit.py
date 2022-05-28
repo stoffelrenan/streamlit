@@ -24,7 +24,7 @@ def local_css(file_name):
 local_css("style.css")
 
 #Select the coin
-st.sidebar.subheader("""Asset Dashboards""")
+st.sidebar.subheader("""Asset Dashboard""")
 selected_stock = st.sidebar.text_input("Enter a valid asset name...", "BTC")
 button_clicked = st.sidebar.button("Select Asset")
 if button_clicked == "Select Asset":
@@ -128,7 +128,7 @@ def predict_coin(curr,df, date = '2021-07-01', time_step=5):
     
 #main function
 def main():
-    st.title("Asset Dashboard: ")
+    st.title("Asset Dashboard: "+ selected_stock)
     #get data on searched ticker
     data = yf.download(tickers=selected_stock+'-USD', period = '5y', interval = '1d')
     data.name=selected_stock
@@ -163,6 +163,22 @@ def main():
     fig = go.Figure()
     fig.add_trace(go.Candlestick(x=data.index, open=data['Open'], high=data['High'], low=data['Low'], close=data['Close']) )
     st.plotly_chart(fig)
+
+    #Candlestick
+    st.subheader("""Candlestick plot for """ + selected_stock)
+
+    data_1 = [go.Candlestick(x=data.index,
+                           open=data.Open,
+                           high=data.High,
+                           low=data.Low,
+                           close=data.Close)]
+    layout_1 = go.Layout(title=data.name + ' Candlestick')
+    fig_1 = go.Figure(data=data_1, layout=layout_1)
+    st.plotly_chart(fig_1)
+
+    #MACD
+    
+
 
     st.subheader("""Predicted **closing price of tomorrow** for """ + selected_stock)
     #define variable today
