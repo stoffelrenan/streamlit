@@ -27,7 +27,7 @@ local_css("style.css")
 st.sidebar.subheader("""Crypto+Asset Dashboards""")
 selected_stock = st.sidebar.text_input("Enter a valid asset name...", "BTC")
 button_clicked = st.sidebar.button("Select asset")
-if button_clicked == "Select asset":
+if button_clicked == "Select Asset":
     main()
     
 # convert an array of values into a dataset matrix
