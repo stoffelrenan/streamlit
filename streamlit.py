@@ -300,7 +300,7 @@ if page == "Asset Dashboard":
 
         # get current date closing price for searched ticker
         predicted_price_one, predicted_price_two = predict_coin(data.name, data)
-        volume = data['Volume'][-1]
+        volume = '128B'
 
 
         #defining 4 cards
