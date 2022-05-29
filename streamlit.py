@@ -127,7 +127,7 @@ def moving_average(data):
 
     trace1 = dict(type='scatter',
                   x=data.index,
-                  y=data['Close'],
+                  y=data['close'],
                   name='Close Price'
                   )
 
