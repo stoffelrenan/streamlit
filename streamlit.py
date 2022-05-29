@@ -96,7 +96,7 @@ def main():
     current_price = current_price.info['regularMarketPrice']
 
     # get current date closing price for searched ticker
-    predicted_price_one, predicted_price_two = predict_coin(data.name, data)
+    predicted_price_one, predicted_price_two = predict_coin()#predict_coin(data.name, data)
 
     #defining 4 cards
     row1_1, row1_2, row1_3, row1_4 = st.columns((1, 1, 1, 1))
