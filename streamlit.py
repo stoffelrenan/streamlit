@@ -236,7 +236,7 @@ if page == "Asset Dashboard":
             #Fibo Graph
             st.subheader("""Fibonacci plot for """ + selected_stock)
             fig_3 = fib_retrace(data)
-            st.plotly_chart(fig_3)
+            st.write(fig_3)
 
 
         if show_rsi:
