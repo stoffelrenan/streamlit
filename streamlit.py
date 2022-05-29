@@ -48,7 +48,7 @@ def create_dataset(dataset, time_step):
         data_y.append(dataset[i + time_step, 0])
     return np.array(data_x), np.array(data_y)
 
-def predict_coin(name,df,days=3,epochs=5):
+def predict_coin(name,df,days=3,epochs=20):
     
     scaler,df1 = lstm_close(df)
     
@@ -299,8 +299,10 @@ if page == "Asset Dashboard":
  
 
         # get current date closing price for searched ticker
-        predicted_price_one, predicted_price_two = predict_coin(data.name, data)
-        volume = '128B'
+        predictions = predict_coin(data.name, data)
+        predicted_price_one = predictions[0][0]
+        predicted_price_two = predictions[1][0]
+        volume = data['volume'][-1]
 
 
         #defining 4 cards
