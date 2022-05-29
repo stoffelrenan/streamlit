@@ -84,7 +84,6 @@ page = st.sidebar.selectbox("Choose your page", ["Asset Dashboard", "Company Inv
 
 
 
-
 if page == "Asset Dashboard":
     #main function
     def main():
@@ -116,12 +115,6 @@ if page == "Asset Dashboard":
 
         st.subheader("""Daily **closing price** for """ + selected_stock)
 
-        #print line chart with daily closing prices for searched ticker
-        #st.line_chart(data.Close)
-        fig = go.Figure()
-        fig.add_trace(go.Candlestick(x=data.index, open=data['Open'], high=data['High'], low=data['Low'], close=data['Close']) )
-        st.plotly_chart(fig)
-
         #Candlestick
         st.subheader("""Candlestick plot for """ + selected_stock)
 
@@ -134,10 +127,7 @@ if page == "Asset Dashboard":
         fig_1 = go.Figure(data=data_1, layout=layout_1)
         st.plotly_chart(fig_1)
 
-        #MACD graph
-        st.subheader("""MACD plot for """ + selected_stock)
-        fig_2 = moving_average(data)
-        st.plotly_chart(fig_2)
+
 
     #Select the coin
     st.sidebar.subheader("""Asset Dashboard""")
@@ -145,8 +135,133 @@ if page == "Asset Dashboard":
     button_clicked = st.sidebar.button("Select Asset")
     if button_clicked == "Select Asset":
         main()
-    
         
+    show_macd = st.sidebar.checkbox('MACD Analysis')
+    show_fibonacci = st.sidebar.checkbox('Fibonacci Analysis')
+    show_rsi = st.sidebar.checkbox('RSI Analysis')
+    
+    if show_macd:
+        #MACD graph
+        st.subheader("""MACD plot for """ + selected_stock)
+        fig_2 = moving_average(data)
+        st.plotly_chart(fig_2)
+        
+    if show_fibonacci:
+        #Fibo Graph
+        st.subheader("""Fibonacci plot for """ + selected_stock)
+        
+        def fib_retrace(currency):
+          # Fibonacci constants
+          max_value = data['close'].max()
+          min_value = data['close'].min()
+          difference = max_value - min_value
+
+          # Set Fibonacci levels
+          first_level = max_value - difference * 0.236
+          second_level = max_value - difference * 0.382
+          third_level = max_value - difference * 0.5
+          fourth_level = max_value - difference * 0.618
+
+          # Print levels
+          print('Percentage level\t Price')
+          print('0.00%\t\t', round(max_value, 3))
+          print('23.6\t\t', round(first_level, 3))
+          print('38.2%\t\t', round(second_level, 3))
+          print('50%\t\t', round(third_level, 3))
+          print('61.8%\t\t', round(fourth_level, 3))
+          print('100.00%\t\t', round(min_value, 3))
+
+          # Plot Fibonacci graph
+          plot_title = 'Fibonacci Retracement for ' + data.name
+          fig = plt.figure(figsize=(22.5, 12.5))
+          plt.title(plot_title, fontsize=30)
+          ax = fig.add_subplot(111)
+          plt.plot(data.index, data['close'])
+          plt.axhline(max_value, linestyle='--', alpha=0.5, color='purple')
+          ax.fill_between(currency.index, max_value, first_level, color='purple', alpha=0.2)
+
+          # Fill sections
+          plt.axhline(first_level, linestyle='--', alpha=0.5, color='blue')
+          ax.fill_between(data.index, first_level, second_level, color='blue', alpha=0.2)
+
+          plt.axhline(second_level, linestyle='--', alpha=0.5, color='green')
+          ax.fill_between(data.index, second_level, third_level, color='green', alpha=0.2)
+
+          plt.axhline(third_level, linestyle='--', alpha=0.5, color='red')
+          ax.fill_between(data.index, third_level, fourth_level, color='red', alpha=0.2)
+
+          plt.axhline(fourth_level, linestyle='--', alpha=0.5, color='orange')
+          ax.fill_between(data.index, fourth_level, min_value, color='orange', alpha=0.2)
+
+          plt.axhline(min_value, linestyle='--', alpha=0.5, color='yellow')
+          plt.xlabel('Date', fontsize=20)
+          plt.ylabel('Close Price (USD)', fontsize=20)
+        fib_retrace(data)
+        
+    if show_rsi:
+        st.subheader("""RSI Analysis""")
+        #rsi function
+        def computeRSI (data, time_window):
+            diff = data.diff(1).dropna() # diff in one field(one day)
+        #this preservers dimensions off diff values
+            up_chg = 0 * diff
+            down_chg = 0 * diff
+
+            # up change is equal to the positive difference, otherwise equal to zero
+            up_chg[diff > 0] = diff[ diff>0 ]
+
+            # down change is equal to negative deifference, otherwise equal to zero
+            down_chg[diff < 0] = diff[ diff < 0 ]
+            up_chg_avg = up_chg.ewm(com=time_window-1, min_periods=time_window).mean()
+            down_chg_avg = down_chg.ewm(com=time_window-1, min_periods=time_window).mean()
+
+            rs = abs(up_chg_avg/down_chg_avg)
+            rsi = 100 - 100/(1+rs)    
+            return rsi
+        def RSIgraph (currency): 
+            df=currency.copy()
+            df['close']=computeRSI(df['close'], 14)
+            #set the high and low lines (as columns)
+            df['low'] = 30
+            df['high'] = 70
+            fig = go.Figure()
+            #create lines/traces
+            fig.add_trace(go.Scatter(x=df.index, y=df['close'],
+                                mode='lines',
+                                name=currency.name + ' Close Price',
+                                line=dict(color="Blue", width=1),))
+            fig.add_trace(go.Scatter(x=df.index, y=df['high'],
+                                 fill=None,
+                                 mode='lines',
+                                 name='Sell',
+                                 line=dict(width=0.5, color='rgb(222, 196, 255)', dash='dash')))
+            fig.add_trace(go.Scatter(x=df.index,y=df['low'],
+                                     fill='tonexty', # fill area between trace0 and trace1
+                                     mode='lines',
+                                     name='Buy',
+                                     line=dict(width=0.5, color='rgb(222, 196, 255)', dash='dash')))
+            #update axis ticks
+            fig.update_yaxes(nticks=30,showgrid=True)
+            fig.update_xaxes(nticks=12,showgrid=True)
+            #update layout
+            fig.update_layout(title="<b>Daily RSI</b>"
+                             , height = 700
+                             , xaxis_title='Date'
+                             , yaxis_title='Relative Strength Index'
+                             , template = "plotly" #['ggplot2', 'seaborn', 'simple_white', 'plotly', 'plotly_white', 'plotly_dark']
+                             )
+            #update legend
+            fig.update_layout(legend=dict(
+                orientation="h",
+                yanchor="bottom",
+                y=1.02,
+                xanchor="right",
+                x=1
+            ))
+            #show the figure
+            fig.show()
+        RSIgraph(data)
+  
     
 elif page == "Company Investments":
     st.title(page)
