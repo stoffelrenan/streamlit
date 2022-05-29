@@ -283,7 +283,7 @@ def moving_average(data):
 #Select the page
 st.sidebar.subheader("""Select the page""")
 # Create a page dropdown 
-page = st.sidebar.selectbox("Choose your page", ["Asset Dashboard", "Company Investments"])
+page = st.sidebar.selectbox("Choose your page", ["Asset Dashboard", "Client Investments"])
 
 
 
@@ -365,31 +365,28 @@ if page == "Asset Dashboard":
   
     
 elif page == "Client Investments":
-    #def main():
-    #    st.write(client)
-    #    st.write(coin)
+    def main():
+        df_curr=yf.download(tickers=selected_stock+'-USD', period = '5y', interval = '1d')
+        df_curr.reset_index(inplace=True)
+        df_curr = ta.add_all_ta_features(df_curr, "Open", "High", "Low", "Close", "Volume", fillna=True)
+        df_client=pd.read_csv('clients.csv', index_col=0)
+        df_client.columns = ["Nikala", "Darra", "Senan", "Badão", "Mugo","ALL"]
+        df_client.index=df_client.index.str.lower()
+        # get current date data for searched ticker
+        current_price = yf.Ticker(coin + '-USD')
+        current_price = current_price.info['regularMarketPrice']
+    
+        st.subheader('Dashboard for ' + client)
+        st.subheader('Selected coin: ' + coin)
+        col1, col2, col3 = st.columns(3)
+    
+        col1.metric("Days with us",df_client[client]["dayswus"])
+        col2.metric("Coin amount",str(df_client[df_client.index == coin][client]))
+        col3.metric("Coin value",str(df_client[df_client.index == coin][client]*current_price))
+    st.sidebar.subheader("""Client Investments""")
+    client = st.sidebar.selectbox("Choose the client", ["Nikala", "Darra", "Senan", "Badão", "Mugo", "ALL"])
+    coin = st.sidebar.selectbox("Choose the client's asset", ["ADA","ATOM","AVAX","AXS","BTC","ETH","LINK","LUNA1","MATIC","SOL"])       
 
-        #df_curr=yf.download(tickers=selected_stock+'-USD', period = '5y', interval = '1d')
-        #df_curr.reset_index(inplace=True)
-        #df_curr = ta.add_all_ta_features(df_curr, "Open", "High", "Low", "Close", "Volume", fillna=True)
-        #df_client=pd.read_csv('clients.csv', index_col=0)
-        #df_client.columns = ["Nikala", "Darra", "Senan", "Badão", "Mugo","ALL"]
-        #df_client.index=df_client.index.str.lower()
-        ## get current date data for searched ticker
-        #current_price = yf.Ticker(coin + '-USD')
-        #current_price = current_price.info['regularMarketPrice']
-    
-        #st.subheader('Dashboard for ' + client)
-        #st.subheader('Selected coin: ' + coin)
-        #col1, col2, col3 = st.columns(3)
-    
-        #col1.metric("Days with us",df_client[client]["dayswus"])
-        #col2.metric("Coin amount",str(df_client[df_client.index == coin][client]))
-        #col3.metric("Coin value",str(df_client[df_client.index == coin][client]*current_price))
-    #st.sidebar.subheader("""Client Investments""")
-    #client = st.sidebar.selectbox("Choose the client", ["Nikala", "Darra", "Senan", "Badão", "Mugo", "ALL"])
-    #coin = st.sidebar.selectbox("Choose the client's asset", ["ADA","ATOM","AVAX","AXS","BTC","ETH","LINK","LUNA1","MATIC","SOL"])       
-    st.write('oi')
  
 if __name__ == "__main__":
     main()
