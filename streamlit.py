@@ -343,13 +343,13 @@ if page == "Asset Dashboard":
             #Fibo Graph
             st.subheader("""Fibonacci plot for """ + selected_stock)
             fig_3 = fib_retrace(data)
-            st.write(fig_3)
+            st.write(fig_3, use_container_width=True)
 
 
         if show_rsi:
             st.subheader("""RSI Analysis""")
             fig_4 = RSIgraph(data)
-            st.plotly_chart(fig_4)
+            st.plotly_chart(fig_4, use_container_width=True)
 
 
     #Select the coin
@@ -376,8 +376,8 @@ elif page == "Client Investments":
         # get current date data for searched ticker
         current_price = yf.Ticker(coin + '-USD')
         current_price = current_price.info['regularMarketPrice']
-    
-        st.subheader('Dashboard for ' + client + ' for ' + coin + ' coin')
+
+        st.title('Dashboard for ' + client + ' for ' + coin + ' coin')
         col1, col2, col3 = st.columns(3)
         coin_amount = round(df_client[df_client.index == coin][client][0],4)
         coin_price = round(df_client[df_client.index == coin][client][0]*current_price,2)
@@ -402,14 +402,14 @@ elif page == "Client Investments":
                          {'range': [-33, 33], 'color': "lightyellow"},
                          {'range': [33, 100], 'color': "mediumseagreen"}]}))
 
-        st.plotly_chart(fig_gauge)
+        st.plotly_chart(fig_gauge, use_container_width=True)
 
         new = pd.DataFrame()
         new['Coin'] = df_client.index[:-1]
         new['Amount'] = df_client[client].values[:-1]
         st.subheader('Client Crypto Distribution')
         fig = px.pie(new, values='Amount', names='Coin')
-        st.plotly_chart(fig)
+        st.plotly_chart(fig, use_container_width=True)
 
         #area plot
         st.subheader('Client Asset Value')
@@ -435,7 +435,7 @@ elif page == "Client Investments":
         area_fig.add_hrect(y0=0, y1=df_area["Value"].min() - 30, line_width=0, fillcolor="red", opacity=0.2)
         area_fig.add_hrect(y0=0, y1=df_area["Value"].max() + 30, line_width=0, fillcolor="green", opacity=0.2)
 
-        st.plotly_chart(area_fig)
+        st.plotly_chart(area_fig, use_container_width=True)
         
     st.sidebar.subheader("""Client Investments""")
     client = st.sidebar.selectbox("Choose the client", ["Nikala", "Darra", "Senan", "Badão", "Mugo", "ALL"])
