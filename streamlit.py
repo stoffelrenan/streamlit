@@ -24,6 +24,8 @@ def local_css(file_name):
 #local css sheet
 local_css("style.css")
 
+def predict_coin():
+    return 1, 2
 def moving_average(data):
     data = StockDataFrame.retype(data)
     data['macd'] = data.get('macd') # calculate MACD
@@ -141,7 +143,7 @@ if page == "Asset Dashboard":
 
     #Select the coin
     st.sidebar.subheader("""Asset Dashboard""")
-    selected_stock = st.sidebar.text_input("Enter a valid asset name...", "BTC")
+    selected_stock = st.sidebar.text_input("Enter a valid asset name...")
     button_clicked = st.sidebar.button("Select Asset")
     if button_clicked == "Select Asset":
         main()
