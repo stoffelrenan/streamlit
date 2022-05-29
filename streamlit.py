@@ -27,8 +27,8 @@ local_css("style.css")
 
 def fib_retrace(data):
   # Fibonacci constants
-  max_value = data['Close'].max()
-  min_value = data['Close'].min()
+  max_value = data['close'].max()
+  min_value = data['close'].min()
   difference = max_value - min_value
 
   # Set Fibonacci levels
@@ -84,13 +84,13 @@ def computeRSI (data, time_window):
     return rsi
 def RSIgraph (currency): 
     df=currency.copy()
-    df['Close']=computeRSI(df['Close'], 14)
+    df['close']=computeRSI(df['close'], 14)
     #set the high and low lines (as columns)
-    df['Low'] = 30
-    df['High'] = 70
+    df['low'] = 30
+    df['high'] = 70
     fig = go.Figure()
     #create lines/traces
-    fig.add_trace(go.Scatter(x=df.index, y=df['Close'],
+    fig.add_trace(go.Scatter(x=df.index, y=df['close'],
                         mode='lines',
                         name=currency.name + ' Close Price',
                         line=dict(color="Blue", width=1),))
