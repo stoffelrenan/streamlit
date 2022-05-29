@@ -143,7 +143,7 @@ if page == "Asset Dashboard":
 
     #Select the coin
     st.sidebar.subheader("""Asset Dashboard""")
-    selected_stock = st.sidebar.text_input("Enter a valid asset name...")
+    selected_stock = st.sidebar.text_input("Enter a valid asset name...", "BTC")
     button_clicked = st.sidebar.button("Select Asset")
     if button_clicked == "Select Asset":
         main()
