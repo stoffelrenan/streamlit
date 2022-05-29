@@ -230,7 +230,7 @@ def main():
 #Select the page
 st.sidebar.subheader("""Select the page""")
 # Create a page dropdown 
-page = st.selectbox("Choose your page", ["Asset Dashboard", "Company Investments"])
+page = st.sidebar.selectbox("Choose your page", ["Asset Dashboard", "Company Investments"])
 
 if page == "Asset Dashboard":
 
