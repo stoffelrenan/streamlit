@@ -189,63 +189,63 @@ if page == "Asset Dashboard":
         main()
         
     #main function
-def main():
-    st.title("Asset Dashboard: "+ selected_stock)
-    #get data on searched ticker
-    data = yf.download(tickers=selected_stock+'-USD', period = '5y', interval = '1d')
-    data.name=selected_stock
-    data['macd'] = data.get('macd')  # calculate MACD
-    data.reset_index(inplace=True)
+    def main():
+        st.title("Asset Dashboard: "+ selected_stock)
+        #get data on searched ticker
+        data = yf.download(tickers=selected_stock+'-USD', period = '5y', interval = '1d')
+        data.name=selected_stock
+        data['macd'] = data.get('macd')  # calculate MACD
+        data.reset_index(inplace=True)
 
-    # get current date data for searched ticker
-    current_price = yf.Ticker(selected_stock + '-USD')
-    current_price = current_price.info['regularMarketPrice']
+        # get current date data for searched ticker
+        current_price = yf.Ticker(selected_stock + '-USD')
+        current_price = current_price.info['regularMarketPrice']
 
-    # get current date closing price for searched ticker
-    predicted_price_one, predicted_price_two = predict_coin(data.name, data)
+        # get current date closing price for searched ticker
+        predicted_price_one, predicted_price_two = predict_coin(data.name, data)
 
-    #defining 4 cards
-    row1_1, row1_2, row1_3, row1_4 = st.columns((1, 1, 1, 1))
+        #defining 4 cards
+        row1_1, row1_2, row1_3, row1_4 = st.columns((1, 1, 1, 1))
 
-    with row1_1:
-        st.write('Current price: ' + str(round(current_price,3)))
+        with row1_1:
+            st.write('Current price: ' + str(round(current_price,3)))
 
-    with row1_2:
-        st.write('Prediction for tomorrow: ' + str(predicted_price_one))
+        with row1_2:
+            st.write('Prediction for tomorrow: ' + str(predicted_price_one))
 
-    with row1_3:
-        st.write('Prediction for the day after tomorrow: ' + str(predicted_price_two))
+        with row1_3:
+            st.write('Prediction for the day after tomorrow: ' + str(predicted_price_two))
 
-    with row1_4:
-        st.write("**Something else**")
+        with row1_4:
+            st.write("**Something else**")
 
-    st.subheader("""Daily **closing price** for """ + selected_stock)
+        st.subheader("""Daily **closing price** for """ + selected_stock)
 
-    #print line chart with daily closing prices for searched ticker
-    #st.line_chart(data.Close)
-    fig = go.Figure()
-    fig.add_trace(go.Candlestick(x=data.index, open=data['Open'], high=data['High'], low=data['Low'], close=data['Close']) )
-    st.plotly_chart(fig)
+        #print line chart with daily closing prices for searched ticker
+        #st.line_chart(data.Close)
+        fig = go.Figure()
+        fig.add_trace(go.Candlestick(x=data.index, open=data['Open'], high=data['High'], low=data['Low'], close=data['Close']) )
+        st.plotly_chart(fig)
 
-    #Candlestick
-    st.subheader("""Candlestick plot for """ + selected_stock)
+        #Candlestick
+        st.subheader("""Candlestick plot for """ + selected_stock)
 
-    data_1 = [go.Candlestick(x=data.index,
-                           open=data.Open,
-                           high=data.High,
-                           low=data.Low,
-                           close=data.Close)]
-    layout_1 = go.Layout(title=data.name + ' Candlestick')
-    fig_1 = go.Figure(data=data_1, layout=layout_1)
-    st.plotly_chart(fig_1)
+        data_1 = [go.Candlestick(x=data.index,
+                               open=data.Open,
+                               high=data.High,
+                               low=data.Low,
+                               close=data.Close)]
+        layout_1 = go.Layout(title=data.name + ' Candlestick')
+        fig_1 = go.Figure(data=data_1, layout=layout_1)
+        st.plotly_chart(fig_1)
 
-    #MACD graph
-    st.subheader("""MACD plot for """ + selected_stock)
-    fig_2 = moving_average(data)
-    st.plotly_chart(fig_2)
+        #MACD graph
+        st.subheader("""MACD plot for """ + selected_stock)
+        fig_2 = moving_average(data)
+        st.plotly_chart(fig_2)
 
-    #define variable today
-    
+        #define variable today
+
 elif page == "Company Investments":
     st.title(page)
 
