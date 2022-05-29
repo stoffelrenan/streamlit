@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import yfinance as yf
+from stockstats import StockDataFrame
 import numpy as np
 from datetime import datetime
 from sklearn.preprocessing import MinMaxScaler
