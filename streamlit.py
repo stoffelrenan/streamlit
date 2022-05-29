@@ -384,6 +384,22 @@ elif page == "Client Investments":
         col1.metric("Client for how many days",str(int(df_client[client]["dayswus"])))
         col2.metric("Coin amount",coin_amount)
         col3.metric("Coin value USD",coin_price)
+        st.subheader('Coin percentage change: last 30 days')
+        old_price = df_curr.Close[df_curr.Date==df_curr.Date.max()-timedelta(days=30)]
+        # performance of coin in last 30 days - guage 
+        fig_gauge = go.Figure(go.Indicator(
+            domain = {'x': [0, 1], 'y': [0, 1]},
+            value = round(float(100*((current_price-old_price)/old_price)),1),
+            mode = "gauge+number",
+            title = {'text': "Coin Performance (%)"},
+            gauge = {'axis': {'range': [-100, 100]},
+                     'bar': {'color': "slategray"},
+                     'steps' : [
+                         {'range': [-100, -33], 'color': "lightcoral"},
+                         {'range': [-33, 33], 'color': "lightyellow"},
+                         {'range': [33, 100], 'color': "mediumseagreen"}]}))
+
+        st.plotly_chart(fig_gauge)
         new = pd.DataFrame()
         new['Coin'] = df_client.index[:-1]
         new['Amount'] = df_client[client].values[:-1]
