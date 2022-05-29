@@ -385,7 +385,7 @@ elif page == "Client Investments":
         col3.metric("Coin value USD",coin_price)
         new = pd.DataFrame()
         new['Coin'] = df_client.index[:-1]
-        new['Amount'] = df_client[client].values
+        new['Amount'] = df_client[client].values[:-1]
         # Pie chart, where the slices will be ordered and plotted counter-clockwise:
         labels = new['Coin']
         sizes = new['Amount']
