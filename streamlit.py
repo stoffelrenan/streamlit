@@ -302,15 +302,19 @@ if page == "Asset Dashboard":
         predictions = predict_coin(data.name, data)
         predicted_price_one = predictions[0][0]
         predicted_price_two = predictions[1][0]
+        delta_one = ((predicted_price_one - current_price)/current_price)*100
+        delta_two = ((predicted_price_two - current_price)/current_price)*100
+        
+        
 
         #defining 4 cards
         col1, col2, col3 = st.columns(3)
 
         col1.metric('Current price', str(round(current_price,3)))
 
-        col2.metric('Prediction for tomorrow',str(round(predicted_price_one,3)))
+        col2.metric('Prediction for tomorrow',str(round(predicted_price_one,3)), delta_one + '%')
 
-        col3.metric('Prediction for the day after tomorrow',str(round(predicted_price_two,3)))
+        col3.metric('Prediction for the day after tomorrow',str(round(predicted_price_two,3)), delta_two + '%')
 
         #Candlestick
         st.subheader("""Candlestick plot for """ + selected_stock)
