@@ -452,6 +452,7 @@ elif page == "Client Investments":
         todays_price["Prices"] = todays_price.iloc[:, 1:]
 
         df_client_assets['Total Value'] = todays_price['Prices'] * df_client_assets['Coin Quantity']
+        col2_1.subheader('Client Total Value')
         col2_1.table(df_client_assets)
 
 
