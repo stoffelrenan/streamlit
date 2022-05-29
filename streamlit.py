@@ -90,13 +90,13 @@ def computeRSI (data, time_window):
     return rsi
 def RSIgraph (currency): 
     df=currency.copy()
-    df['close']=computeRSI(df.Close, 14)
+    df['close']=computeRSI(df['close'], 14)
     #set the high and low lines (as columns)
     df['low'] = 30
     df['high'] = 70
     fig = go.Figure()
     #create lines/traces
-    fig.add_trace(go.Scatter(x=df.index, y=df.Close,
+    fig.add_trace(go.Scatter(x=df.index, y=df['close'],
                         mode='lines',
                         name=currency.name + ' Close Price',
                         line=dict(color="Blue", width=1),))
@@ -129,7 +129,7 @@ def RSIgraph (currency):
         x=1
     ))
     #show the figure
-    return fig
+    fig.show()
 
 def predict_coin():
     return 1, 2
