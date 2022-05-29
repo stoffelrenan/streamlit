@@ -82,61 +82,62 @@ st.sidebar.subheader("""Select the page""")
 # Create a page dropdown 
 page = st.sidebar.selectbox("Choose your page", ["Asset Dashboard", "Company Investments"])
 
-#main function
-def main():
-    st.title("Asset Dashboard: "+ selected_stock)
-    #get data on searched ticker
-    data = yf.download(tickers=selected_stock+'-USD', period = '5y', interval = '1d')
-    data.name=selected_stock
-    data['macd'] = data.get('macd')  # calculate MACD
-    data.reset_index(inplace=True)
 
-    # get current date data for searched ticker
-    current_price = yf.Ticker(selected_stock + '-USD')
-    current_price = current_price.info['regularMarketPrice']
-
-    # get current date closing price for searched ticker
-    predicted_price_one, predicted_price_two = predict_coin()#predict_coin(data.name, data)
-
-    
-    #defining 4 cards
-    col1, col2, col3, col4 = st.columns(4)
-
-    col1.metric('Current price', str(round(current_price,3)))
-
-    col2.metric('Prediction for tomorrow',str(predicted_price_one))
-
-    col3.metric('Prediction for the day after tomorrow',str(predicted_price_two))
-
-    col4.metric("**Something else**", '1234')
-
-    st.subheader("""Daily **closing price** for """ + selected_stock)
-
-    #print line chart with daily closing prices for searched ticker
-    #st.line_chart(data.Close)
-    fig = go.Figure()
-    fig.add_trace(go.Candlestick(x=data.index, open=data['Open'], high=data['High'], low=data['Low'], close=data['Close']) )
-    st.plotly_chart(fig)
-
-    #Candlestick
-    st.subheader("""Candlestick plot for """ + selected_stock)
-
-    data_1 = [go.Candlestick(x=data.index,
-                           open=data.Open,
-                           high=data.High,
-                           low=data.Low,
-                           close=data.Close)]
-    layout_1 = go.Layout(title=data.name + ' Candlestick')
-    fig_1 = go.Figure(data=data_1, layout=layout_1)
-    st.plotly_chart(fig_1)
-
-    #MACD graph
-    st.subheader("""MACD plot for """ + selected_stock)
-    fig_2 = moving_average(data)
-    st.plotly_chart(fig_2)
 
 
 if page == "Asset Dashboard":
+    #main function
+    def main():
+        st.title("Asset Dashboard: "+ selected_stock)
+        #get data on searched ticker
+        data = yf.download(tickers=selected_stock+'-USD', period = '5y', interval = '1d')
+        data.name=selected_stock
+        data['macd'] = data.get('macd')  # calculate MACD
+        data.reset_index(inplace=True)
+
+        # get current date data for searched ticker
+        current_price = yf.Ticker(selected_stock + '-USD')
+        current_price = current_price.info['regularMarketPrice']
+
+        # get current date closing price for searched ticker
+        predicted_price_one, predicted_price_two = predict_coin()#predict_coin(data.name, data)
+
+
+        #defining 4 cards
+        col1, col2, col3, col4 = st.columns(4)
+
+        col1.metric('Current price', str(round(current_price,3)))
+
+        col2.metric('Prediction for tomorrow',str(predicted_price_one))
+
+        col3.metric('Prediction for the day after tomorrow',str(predicted_price_two))
+
+        col4.metric("**Something else**", '1234')
+
+        st.subheader("""Daily **closing price** for """ + selected_stock)
+
+        #print line chart with daily closing prices for searched ticker
+        #st.line_chart(data.Close)
+        fig = go.Figure()
+        fig.add_trace(go.Candlestick(x=data.index, open=data['Open'], high=data['High'], low=data['Low'], close=data['Close']) )
+        st.plotly_chart(fig)
+
+        #Candlestick
+        st.subheader("""Candlestick plot for """ + selected_stock)
+
+        data_1 = [go.Candlestick(x=data.index,
+                               open=data.Open,
+                               high=data.High,
+                               low=data.Low,
+                               close=data.Close)]
+        layout_1 = go.Layout(title=data.name + ' Candlestick')
+        fig_1 = go.Figure(data=data_1, layout=layout_1)
+        st.plotly_chart(fig_1)
+
+        #MACD graph
+        st.subheader("""MACD plot for """ + selected_stock)
+        fig_2 = moving_average(data)
+        st.plotly_chart(fig_2)
 
     #Select the coin
     st.sidebar.subheader("""Asset Dashboard""")
@@ -144,15 +145,14 @@ if page == "Asset Dashboard":
     button_clicked = st.sidebar.button("Select Asset")
     if button_clicked == "Select Asset":
         main()
+    
         
     
 elif page == "Company Investments":
     st.title(page)
+    def main():
+        st.write('teste')
 
-    
-
-
-
-
+ 
 if __name__ == "__main__":
     main()
