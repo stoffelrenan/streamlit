@@ -60,7 +60,7 @@ def fib_retrace(currency):
   plt.axhline(min_value, linestyle='--', alpha=0.5, color='yellow')
   plt.xlabel('Date', fontsize=20)
   plt.ylabel('Close Price (USD)', fontsize=20)
-  plt.show()
+  return fig
 
 
 #rsi function
@@ -235,7 +235,8 @@ if page == "Asset Dashboard":
         if show_fibonacci:
             #Fibo Graph
             st.subheader("""Fibonacci plot for """ + selected_stock)
-            fib_retrace(data)
+            fig_3 = fib_retrace(data)
+            st.plotly_chart(fig_3)
 
 
         if show_rsi:
