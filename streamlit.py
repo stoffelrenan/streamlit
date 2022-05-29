@@ -377,15 +377,17 @@ elif page == "Client Investments":
     
         st.subheader('Dashboard for ' + client + ' for ' + coin + ' coin')
         col1, col2, col3 = st.columns(3)
-        coin_amount = df_client[df_client.index == coin][client][0]
-        coin_price = df_client[df_client.index == coin][client][0]*current_price
+        coin_amount = round(df_client[df_client.index == coin][client][0],4)
+        coin_price = round(df_client[df_client.index == coin][client][0]*current_price,2)
     
         col1.metric("Client for how many days",str(int(df_client[client]["dayswus"])))
         col2.metric("Coin amount",coin_amount)
-        col3.metric("Coin value",coin_price)
+        col3.metric("Coin value USD",coin_price)
     st.sidebar.subheader("""Client Investments""")
     client = st.sidebar.selectbox("Choose the client", ["Nikala", "Darra", "Senan", "Badão", "Mugo", "ALL"])
-    coin = st.sidebar.selectbox("Choose the client's asset", ["ADA","ATOM","AVAX","AXS","BTC","ETH","LINK","LUNA1","MATIC","SOL"])       
+    coin = st.sidebar.selectbox("Choose the client's asset", ["ADA","ATOM","AVAX","AXS","BTC","ETH","LINK","LUNA1","MATIC","SOL"])
+    #table of all assets and values
+    st.table(df_client[client])
 
  
 if __name__ == "__main__":
