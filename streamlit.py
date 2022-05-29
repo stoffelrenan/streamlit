@@ -113,8 +113,6 @@ if page == "Asset Dashboard":
 
         col4.metric("**Something else**", '1234')
 
-        st.subheader("""Daily **closing price** for """ + selected_stock)
-
         #Candlestick
         st.subheader("""Candlestick plot for """ + selected_stock)
 
