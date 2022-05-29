@@ -302,19 +302,15 @@ if page == "Asset Dashboard":
         predictions = predict_coin(data.name, data)
         predicted_price_one = predictions[0][0]
         predicted_price_two = predictions[1][0]
-        volume = data['Volume'][-1]
-
 
         #defining 4 cards
-        col1, col2, col3, col4 = st.columns(4)
+        col1, col2, col3 = st.columns(3)
 
         col1.metric('Current price', str(round(current_price,3)))
 
         col2.metric('Prediction for tomorrow',str(predicted_price_one))
 
         col3.metric('Prediction for the day after tomorrow',str(predicted_price_two))
-
-        col4.metric("Volume traded last 24h", str(volume))
 
         #Candlestick
         st.subheader("""Candlestick plot for """ + selected_stock)
