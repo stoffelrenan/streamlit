@@ -50,7 +50,7 @@ def fib_retrace(currency):
   #print('100.00%\t\t', round(min_value, 3))
 
   # Plot Fibonacci graph
-  plot_title = 'Fibonacci Retracement for ' + currency.name
+  plot_title = 'Fibonacci Retracement'
   fig = plt.figure(figsize=(22.5, 12.5))
   plt.title(plot_title, fontsize=30)
   ax = fig.add_subplot(111)
