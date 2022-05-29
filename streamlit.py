@@ -365,10 +365,9 @@ if page == "Asset Dashboard":
   
     
 elif page == "Client Investments":
-    def main():
-        st.write(client)
-        st.write(coin)
-
+    #def main():
+    #    st.write(client)
+    #    st.write(coin)
 
         #df_curr=yf.download(tickers=selected_stock+'-USD', period = '5y', interval = '1d')
         #df_curr.reset_index(inplace=True)
@@ -387,10 +386,10 @@ elif page == "Client Investments":
         #col1.metric("Days with us",df_client[client]["dayswus"])
         #col2.metric("Coin amount",str(df_client[df_client.index == coin][client]))
         #col3.metric("Coin value",str(df_client[df_client.index == coin][client]*current_price))
-    st.sidebar.subheader("""Client Investments""")
-    client = st.sidebar.selectbox("Choose the client", ["Nikala", "Darra", "Senan", "Badão", "Mugo", "ALL"])
-    coin = st.sidebar.selectbox("Choose the client's asset", ["ADA","ATOM","AVAX","AXS","BTC","ETH","LINK","LUNA1","MATIC","SOL"])       
-    
+    #st.sidebar.subheader("""Client Investments""")
+    #client = st.sidebar.selectbox("Choose the client", ["Nikala", "Darra", "Senan", "Badão", "Mugo", "ALL"])
+    #coin = st.sidebar.selectbox("Choose the client's asset", ["ADA","ATOM","AVAX","AXS","BTC","ETH","LINK","LUNA1","MATIC","SOL"])       
+    st.write('oi')
  
-#if __name__ == "__main__":
-#    main()
+if __name__ == "__main__":
+    main()
