@@ -245,8 +245,7 @@ if page == "Asset Dashboard":
 
         if show_rsi:
             st.subheader("""RSI Analysis""")
-            fig_4 = RSIgraph(data)
-            st.plotly_chart(fig_4)
+            RSIgraph(data)
 
 
     #Select the coin
