@@ -378,14 +378,13 @@ elif page == "Client Investments":
         current_price = current_price.info['regularMarketPrice']
 
         st.title('Dashboard for ' + client + ' for ' + coin + ' coin')
-        col1, col2, col3, col4 = st.columns(4)
+        col1, col2, col3= st.columns(3)
         coin_amount = round(df_client[df_client.index == coin][client][0],4)
         coin_price = round(df_client[df_client.index == coin][client][0]*current_price,2)
     
         col1.metric("Client for how many days",str(int(df_client[client]["dayswus"])))
         col2.metric("Coin quantity",coin_amount)
         col3.metric("Coin value USD",coin_price)
-        col4.metric("Coin percentage change: last 30 days", fig_gauge)
 
         col2_1, col2_2 = st.columns(2)
         col2_2.subheader('Coin percentage change: last 30 days')
