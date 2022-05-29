@@ -383,7 +383,10 @@ elif page == "Client Investments":
         col1.metric("Client for how many days",str(int(df_client[client]["dayswus"])))
         col2.metric("Coin amount",coin_amount)
         col3.metric("Coin value USD",coin_price)
-        st.dataframe(df_client[client][:-1])
+        new = pd.DataFrame()
+        new['Coin'] = df_client.index
+        new['Amount'] = df_client[client].values
+        st.dataframe(new[:-1])
     st.sidebar.subheader("""Client Investments""")
     client = st.sidebar.selectbox("Choose the client", ["Nikala", "Darra", "Senan", "Badão", "Mugo", "ALL"])
     coin = st.sidebar.selectbox("Choose the client's asset", ["ADA","ATOM","AVAX","AXS","BTC","ETH","LINK","LUNA1","MATIC","SOL"])
