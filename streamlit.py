@@ -375,7 +375,7 @@ elif page == "Client Investments":
         current_price = yf.Ticker(coin + '-USD')
         current_price = current_price.info['regularMarketPrice']
     
-        st.subheader('Dashboard for ' + client + ' for ' + coin + ' coin")
+        st.subheader('Dashboard for ' + client + ' for ' + coin + ' coin')
         col1, col2, col3 = st.columns(3)
         coin_amount = df_client[df_client.index == coin][client]
         coin_price = df_client[df_client.index == coin][client]*current_price
