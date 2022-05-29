@@ -383,11 +383,12 @@ elif page == "Client Investments":
         col1.metric("Client for how many days",str(int(df_client[client]["dayswus"])))
         col2.metric("Coin amount",coin_amount)
         col3.metric("Coin value USD",coin_price)
+        st.table(df_client[client])
     st.sidebar.subheader("""Client Investments""")
     client = st.sidebar.selectbox("Choose the client", ["Nikala", "Darra", "Senan", "Badão", "Mugo", "ALL"])
     coin = st.sidebar.selectbox("Choose the client's asset", ["ADA","ATOM","AVAX","AXS","BTC","ETH","LINK","LUNA1","MATIC","SOL"])
     #table of all assets and values
-    st.table(df_client[client])
+
 
  
 if __name__ == "__main__":
