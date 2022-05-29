@@ -173,7 +173,22 @@ def moving_average(data):
     return fig
 
 
-#main function
+
+#Select the page
+st.sidebar.subheader("""Select the page""")
+# Create a page dropdown 
+page = st.sidebar.selectbox("Choose your page", ["Asset Dashboard", "Company Investments"])
+
+if page == "Asset Dashboard":
+
+    #Select the coin
+    st.sidebar.subheader("""Asset Dashboard""")
+    selected_stock = st.sidebar.text_input("Enter a valid asset name...", "BTC")
+    button_clicked = st.sidebar.button("Select Asset")
+    if button_clicked == "Select Asset":
+        main()
+        
+    #main function
 def main():
     st.title("Asset Dashboard: "+ selected_stock)
     #get data on searched ticker
@@ -231,21 +246,6 @@ def main():
 
     #define variable today
     
-
-#Select the page
-st.sidebar.subheader("""Select the page""")
-# Create a page dropdown 
-page = st.sidebar.selectbox("Choose your page", ["Asset Dashboard", "Company Investments"])
-
-if page == "Asset Dashboard":
-
-    #Select the coin
-    st.sidebar.subheader("""Asset Dashboard""")
-    selected_stock = st.sidebar.text_input("Enter a valid asset name...", "BTC")
-    button_clicked = st.sidebar.button("Select Asset")
-    if button_clicked == "Select Asset":
-        main()
-        
 elif page == "Company Investments":
     st.title(page)
 
