@@ -366,7 +366,7 @@ if page == "Asset Dashboard":
     
 elif page == "Client Investments":
     def main():
-        df_curr=yf.download(tickers=selected_stock+'-USD', period = '5y', interval = '1d')
+        df_curr=yf.download(tickers=coin+'-USD', period = '5y', interval = '1d')
         df_curr.reset_index(inplace=True)
         df_curr = ta.add_all_ta_features(df_curr, "Open", "High", "Low", "Close", "Volume", fillna=True)
         df_client=pd.read_csv('clients.csv', index_col=0)
