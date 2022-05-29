@@ -25,7 +25,7 @@ def local_css(file_name):
 local_css("style.css")
 
 
-def fib_retrace(currency):
+def fib_retrace(data):
   # Fibonacci constants
   max_value = data['Close'].max()
   min_value = data['Close'].min()
@@ -62,6 +62,7 @@ def fib_retrace(currency):
   plt.axhline(min_value, linestyle='--', alpha=0.5, color='yellow')
   plt.xlabel('Date', fontsize=20)
   plt.ylabel('Close Price (USD)', fontsize=20)
+  return fig
 
 #rsi function
 def computeRSI (data, time_window):
@@ -122,7 +123,7 @@ def RSIgraph (currency):
         x=1
     ))
     #show the figure
-    fig.show()
+    return fig
 
 def predict_coin():
     return 1, 2
@@ -239,7 +240,8 @@ if page == "Asset Dashboard":
 
         if show_rsi:
             st.subheader("""RSI Analysis""")
-            RSIgraph(data)
+            fig_4 = RSIgraph(data)
+            st.plotly_chart(fig_4)
 
 
     #Select the coin
