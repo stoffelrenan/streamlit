@@ -100,7 +100,7 @@ def RSIgraph (currency):
     #create lines/traces
     fig.add_trace(go.Scatter(x=df.index, y=df['close'],
                         mode='lines',
-                        name=currency.name + ' Close Price',
+                        name='Close Price',
                         line=dict(color="Blue", width=1),))
     fig.add_trace(go.Scatter(x=df.index, y=df['high'],
                          fill=None,
