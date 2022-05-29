@@ -26,7 +26,7 @@ def local_css(file_name):
 local_css("style.css")
 
 def lstm_close(curr):
-    df=curr.reset_index()['close']
+    df=curr.reset_index()['Close']
     scaler=MinMaxScaler(feature_range=(0,1))
     df = np.array(df).reshape(-1,1)
     #df=scaler.fit_transform(np.array(df).reshape(-1,1))
