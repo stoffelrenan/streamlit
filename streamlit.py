@@ -392,5 +392,5 @@ elif page == "Client Investments":
     coin = st.sidebar.selectbox("Choose the client's asset", ["ADA","ATOM","AVAX","AXS","BTC","ETH","LINK","LUNA1","MATIC","SOL"])       
     
  
-if __name__ == "__main__":
-    main()
+#if __name__ == "__main__":
+#    main()
