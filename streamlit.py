@@ -97,6 +97,11 @@ if page == "Asset Dashboard":
         # get current date data for searched ticker
         current_price = yf.Ticker(selected_stock + '-USD')
         current_price = current_price.info['regularMarketPrice']
+        
+        
+        current_volume = yf.download(tickers=selected_stock+'-USD', period = '24h', interval = '1d')
+        current_volume = current_volume['Volume']
+        
 
         # get current date closing price for searched ticker
         predicted_price_one, predicted_price_two = predict_coin()#predict_coin(data.name, data)
@@ -111,7 +116,7 @@ if page == "Asset Dashboard":
 
         col3.metric('Prediction for the day after tomorrow',str(predicted_price_two))
 
-        col4.metric("**Something else**", '1234')
+        col4.metric("Volume traded last 24h", current_volume)
 
         #Candlestick
         st.subheader("""Candlestick plot for """ + selected_stock)
