@@ -406,7 +406,7 @@ elif page == "Client Investments":
         new = pd.DataFrame()
         new['Coin'] = df_client.index[:-1]
         new['Amount'] = df_client[client].values[:-1]
-        st.subheader('Crypto Distribution')
+        st.subheader('Client Crypto Distribution')
         fig = px.pie(new, values='Amount', names='Coin')
         st.plotly_chart(fig)
         
