@@ -365,19 +365,20 @@ if page == "Asset Dashboard":
   
     
 elif page == "Client Investments":
-    st.sidebar.subheader("""Client Investments""")
-    client = st.sidebar.selectbox("Choose the client", ["Nikala", "Darra", "Senan", "Badão", "Mugo", "ALL"])
-    coin = st.sidebar.selectbox("Choose the client's asset", ["ADA","ATOM","AVAX","AXS","BTC","ETH","LINK","LUNA1","MATIC","SOL"])
- 
-    #df_curr=yf.download(tickers=selected_stock+'-USD', period = '5y', interval = '1d')
-    #df_curr.reset_index(inplace=True)
-    #df_curr = ta.add_all_ta_features(df_curr, "Open", "High", "Low", "Close", "Volume", fillna=True)
-    #df_client=pd.read_csv('clients.csv', index_col=0)
-    #df_client.columns = ["Nikala", "Darra", "Senan", "Badão", "Mugo","ALL"]
-    #df_client.index=df_client.index.str.lower()
-    ## get current date data for searched ticker
-    #current_price = yf.Ticker(coin + '-USD')
-    #current_price = current_price.info['regularMarketPrice']
+    def main():
+        st.sidebar.subheader("""Client Investments""")
+        client = st.sidebar.selectbox("Choose the client", ["Nikala", "Darra", "Senan", "Badão", "Mugo", "ALL"])
+        coin = st.sidebar.selectbox("Choose the client's asset", ["ADA","ATOM","AVAX","AXS","BTC","ETH","LINK","LUNA1","MATIC","SOL"])
+
+        #df_curr=yf.download(tickers=selected_stock+'-USD', period = '5y', interval = '1d')
+        #df_curr.reset_index(inplace=True)
+        #df_curr = ta.add_all_ta_features(df_curr, "Open", "High", "Low", "Close", "Volume", fillna=True)
+        #df_client=pd.read_csv('clients.csv', index_col=0)
+        #df_client.columns = ["Nikala", "Darra", "Senan", "Badão", "Mugo","ALL"]
+        #df_client.index=df_client.index.str.lower()
+        ## get current date data for searched ticker
+        #current_price = yf.Ticker(coin + '-USD')
+        #current_price = current_price.info['regularMarketPrice']
 #
     #st.subheader('Dashboard for ' + client)
     #st.subheader('Selected coin: ' + coin)
