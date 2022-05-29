@@ -14,6 +14,7 @@ import ta
 import math
 from xgboost import XGBRegressor
 import plotly.graph_objects as go
+import matplotlib.pyplot as plt
 
 
 #function calling local css sheet
