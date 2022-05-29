@@ -3,6 +3,7 @@ import pandas as pd
 import yfinance as yf
 from stockstats import StockDataFrame
 import numpy as np
+import plotly.express as px
 import matplotlib as mpl
 mpl.style.use('seaborn')
 np.seterr(divide='ignore', invalid='ignore')
@@ -386,17 +387,8 @@ elif page == "Client Investments":
         new = pd.DataFrame()
         new['Coin'] = df_client.index[:-1]
         new['Amount'] = df_client[client].values[:-1]
-        # Pie chart, where the slices will be ordered and plotted counter-clockwise:
-        labels = new['Coin']
-        sizes = new['Amount']
-        #explode = (0, 0.1, 0, 0)  # only "explode" the 2nd slice (i.e. 'Hogs')
-
-        fig1, ax1 = plt.subplots()
-        ax1.pie(sizes, labels=labels, autopct='%1.1f%%',
-                shadow=False, startangle=90)
-        ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
-
-        st.pyplot(fig1)
+        fig = px.pie(new, values='Amount', names='Coin')
+        fig.show()
     st.sidebar.subheader("""Client Investments""")
     client = st.sidebar.selectbox("Choose the client", ["Nikala", "Darra", "Senan", "Badão", "Mugo", "ALL"])
     coin = st.sidebar.selectbox("Choose the client's asset", ["ADA","ATOM","AVAX","AXS","BTC","ETH","LINK","LUNA1","MATIC","SOL"])
