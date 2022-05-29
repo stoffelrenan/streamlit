@@ -308,9 +308,9 @@ if page == "Asset Dashboard":
 
         col1.metric('Current price', str(round(current_price,3)))
 
-        col2.metric('Prediction for tomorrow',str(predicted_price_one))
+        col2.metric('Prediction for tomorrow',str(round(predicted_price_one,3)))
 
-        col3.metric('Prediction for the day after tomorrow',str(predicted_price_two))
+        col3.metric('Prediction for the day after tomorrow',str(round(predicted_price_two,3)))
 
         #Candlestick
         st.subheader("""Candlestick plot for """ + selected_stock)
