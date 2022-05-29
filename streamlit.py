@@ -130,7 +130,7 @@ def predict_coin(curr,df, date = '2021-07-01', time_step=5):
 def moving_average(data):
     trace1 = dict(type='scatter',
                   x=data.index,
-                  y=data['close'],
+                  y=data['Close'],
                   name='Close Price'
                   )
 
@@ -230,7 +230,7 @@ def main():
     st.subheader("""MACD plot for """ + selected_stock)
     fig_2 = moving_average(data)
     st.plotly_chart(fig_2)
-    
+
     #define variable today
 
 
