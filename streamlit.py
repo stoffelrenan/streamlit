@@ -436,7 +436,25 @@ elif page == "Client Investments":
         area_fig.add_hrect(y0=0, y1=df_area["Value"].max() + 30, line_width=0, fillcolor="green", opacity=0.2)
 
         col2_1.plotly_chart(area_fig, use_container_width=True)
-        
+
+        #table of assets
+        df_client_assets = pd.DataFrame(df_client[client])
+        df_client_assets.columns = ["Coin Quantity"]
+        cia = ['ADA-USD', 'ATOM-USD', 'AVAX-USD', 'AXS-USD', 'BTC-USD', 'ETH-USD', 'LINK-USD', 'LUNA1-USD', 'MATIC-USD',
+               'SOL-USD']
+        todays_price = yf.download(tickers=cia, period='1d', interval='1d')
+        todays_price = todays_price["Close"].T
+
+        df_client_assets = df_client_assets[:-1]
+        df_client_assets.reset_index(inplace=True)
+
+        todays_price.reset_index(inplace=True)
+        todays_price["Prices"] = todays_price.iloc[:, 1:]
+
+        df_client_assets['Total Value'] = todays_price['Prices'] * df_client_assets['Coin Quantity']
+        col2_1.Table(df_client_assets)
+
+
     st.sidebar.subheader("""Client Investments""")
     client = st.sidebar.selectbox("Choose the client", ["Nikala", "Darra", "Senan", "Badão", "Mugo", "ALL"])
     coin = st.sidebar.selectbox("Choose the client's asset", ["ADA","ATOM","AVAX","AXS","BTC","ETH","LINK","LUNA1","MATIC","SOL"])
