@@ -98,20 +98,17 @@ def main():
     # get current date closing price for searched ticker
     predicted_price_one, predicted_price_two = predict_coin()#predict_coin(data.name, data)
 
+    
     #defining 4 cards
-    row1_1, row1_2, row1_3, row1_4 = st.columns((1, 1, 1, 1))
+    col1, col2, col3, col4 = st.columns(4)
 
-    with row1_1:
-        st.write('Current price: ' + str(round(current_price,3)))
+    col1.metric('Current price', str(round(current_price,3)))
 
-    with row1_2:
-        st.write('Prediction for tomorrow: ' + str(predicted_price_one))
+    col2.metric('Prediction for tomorrow',str(predicted_price_one))
 
-    with row1_3:
-        st.write('Prediction for the day after tomorrow: ' + str(predicted_price_two))
+    col3.metric('Prediction for the day after tomorrow',str(predicted_price_two))
 
-    with row1_4:
-        st.write("**Something else**")
+    col4.metric("**Something else**", '1234')
 
     st.subheader("""Daily **closing price** for """ + selected_stock)
 
