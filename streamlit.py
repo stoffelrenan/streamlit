@@ -21,6 +21,7 @@ from xgboost import XGBRegressor
 import plotly.graph_objects as go
 import matplotlib.pyplot as plt
 
+st.set_page_config(layout="wide")
 
 #function calling local css sheet
 def local_css(file_name):
