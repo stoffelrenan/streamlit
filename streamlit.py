@@ -383,11 +383,11 @@ elif page == "Client Investments":
         coin_price = round(df_client[df_client.index == coin][client][0]*current_price,2)
     
         col1.metric("Client for how many days",str(int(df_client[client]["dayswus"])))
-        col2.metric("Coin amount",coin_amount)
+        col2.metric("Coin quantity",coin_amount)
         col3.metric("Coin value USD",coin_price)
-        
 
-        st.subheader('Coin percentage change: last 30 days')
+        col2_1, col2_2 = st.columns(2)
+        col2_2.subheader('Coin percentage change: last 30 days')
         old_price = df_curr.Close[df_curr.Date==df_curr.Date.max()-timedelta(days=30)]
         # performance of coin in last 30 days - guage 
         fig_gauge = go.Figure(go.Indicator(
@@ -402,17 +402,17 @@ elif page == "Client Investments":
                          {'range': [-33, 33], 'color': "lightyellow"},
                          {'range': [33, 100], 'color': "mediumseagreen"}]}))
 
-        st.plotly_chart(fig_gauge, use_container_width=True)
+        col2_2.plotly_chart(fig_gauge, use_container_width=True)
 
         new = pd.DataFrame()
         new['Coin'] = df_client.index[:-1]
         new['Amount'] = df_client[client].values[:-1]
-        st.subheader('Client Crypto Distribution')
+        col2_2.subheader('Client Crypto Distribution')
         fig = px.pie(new, values='Amount', names='Coin')
-        st.plotly_chart(fig, use_container_width=True)
+        col2_2.plotly_chart(fig, use_container_width=True)
 
         #area plot
-        st.subheader('Client Asset Value')
+        col2_1.subheader('Client Asset Value')
 
         # area plot total value over time since client
         dayswus = df_client[client]["dayswus"]
@@ -435,7 +435,7 @@ elif page == "Client Investments":
         area_fig.add_hrect(y0=0, y1=df_area["Value"].min() - 30, line_width=0, fillcolor="red", opacity=0.2)
         area_fig.add_hrect(y0=0, y1=df_area["Value"].max() + 30, line_width=0, fillcolor="green", opacity=0.2)
 
-        st.plotly_chart(area_fig, use_container_width=True)
+        col2_1.plotly_chart(area_fig, use_container_width=True)
         
     st.sidebar.subheader("""Client Investments""")
     client = st.sidebar.selectbox("Choose the client", ["Nikala", "Darra", "Senan", "Badão", "Mugo", "ALL"])
