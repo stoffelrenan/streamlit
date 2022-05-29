@@ -242,7 +242,6 @@ if page == "Asset Dashboard":
         main()
         
 elif page == "Company Investments":
-    st.sidebar.subheader("""Company Investments""")
     st.title(page)
 
     
