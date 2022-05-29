@@ -409,6 +409,32 @@ elif page == "Client Investments":
         st.subheader('Client Crypto Distribution')
         fig = px.pie(new, values='Amount', names='Coin')
         st.plotly_chart(fig)
+
+        #area plot
+        st.subheader('Client Asset Value')
+
+        # area plot total value over time since client
+        dayswus = df_client[client]["dayswus"]
+        df_area = df_curr[["Date", "Close"]][df_curr.Date > df_curr.Date.max() - timedelta(days=dayswus)]
+        # price at purchase
+        price_at_purchase = float(df_curr.Close[df_curr.Date == df_curr.Date.max() - timedelta(days=(dayswus - 1))]) * float(df_client[df_client.index == coin][client])
+        # new dataframe with value of client coin
+        df_area["Value"] = df_area.Close * float(df_client[df_client.index == coin][client]) - price_at_purchase
+
+        #plot
+        area_fig = go.Figure()
+        area_fig.add_trace(
+            go.Scatter(x=df_area["Date"], y=df_area["Value"], fill='tozeroy', line_color='slategrey', mode='lines',
+                       showlegend=False))
+
+        # hard-code the axes
+        area_fig.update_xaxes(range=[df_area["Date"].min(), df_area["Date"].max()])
+        area_fig.update_yaxes(range=[df_area["Value"].min() - 30, df_area["Value"].max() + 30])
+
+        area_fig.add_hrect(y0=0, y1=df_area["Value"].min() - 30, line_width=0, fillcolor="red", opacity=0.2)
+        area_fig.add_hrect(y0=0, y1=df_area["Value"].max() + 30, line_width=0, fillcolor="green", opacity=0.2)
+
+        st.plotly_chart(area_fig)
         
     st.sidebar.subheader("""Client Investments""")
     client = st.sidebar.selectbox("Choose the client", ["Nikala", "Darra", "Senan", "Badão", "Mugo", "ALL"])
