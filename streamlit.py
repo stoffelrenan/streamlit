@@ -81,7 +81,7 @@ st.sidebar.subheader("""Select the page""")
 page = st.sidebar.selectbox("Choose your page", ["Asset Dashboard", "Company Investments"])
 
 #main function
-def page1():
+def main():
     st.title("Asset Dashboard: "+ selected_stock)
     #get data on searched ticker
     data = yf.download(tickers=selected_stock+'-USD', period = '5y', interval = '1d')
@@ -144,7 +144,7 @@ if page == "Asset Dashboard":
     selected_stock = st.sidebar.text_input("Enter a valid asset name...", "BTC")
     button_clicked = st.sidebar.button("Select Asset")
     if button_clicked == "Select Asset":
-        page1()
+        main()
         
     
 elif page == "Company Investments":
