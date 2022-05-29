@@ -332,12 +332,12 @@ if page == "Asset Dashboard":
                                close=data.Close)]
         layout_1 = go.Layout(title=data.name + ' Candlestick')
         fig_1 = go.Figure(data=data_1, layout=layout_1)
-        st.plotly_chart(fig_1)
+        st.plotly_chart(fig_1, use_container_width=True)
         if show_macd:
             #MACD graph
             st.subheader("""MACD plot for """ + selected_stock)
             fig_2 = moving_average(data)
-            st.plotly_chart(fig_2)
+            st.plotly_chart(fig_2, use_container_width=True)
 
         if show_fibonacci:
             #Fibo Graph
