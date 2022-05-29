@@ -235,7 +235,7 @@ if page == "Asset Dashboard":
         if show_fibonacci:
             #Fibo Graph
             st.subheader("""Fibonacci plot for """ + selected_stock)
-            currency, max_value, min_value, difference, first_level, second_level, third_level, fourth_level = fib_retrace(data)
+            fib_retrace(data)
 
 
         if show_rsi:
