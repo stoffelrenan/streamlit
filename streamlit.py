@@ -27,6 +27,7 @@ local_css("style.css")
 
 
 def fib_retrace(currency):
+  currency = StockDataFrame.retype(currency)
   
   # Fibonacci constants
   max_value = currency['close'].max()
@@ -89,6 +90,7 @@ def computeRSI (data, time_window):
     rsi = 100 - 100/(1+rs)    
     return rsi
 def RSIgraph (currency): 
+    currency = StockDataFrame.retype(currency)
     df=currency.copy()
     df['close']=computeRSI(df['close'], 14)
     #set the high and low lines (as columns)
@@ -129,7 +131,7 @@ def RSIgraph (currency):
         x=1
     ))
     #show the figure
-    fig.show()
+    return fig
 
 def predict_coin():
     return 1, 2
@@ -245,7 +247,8 @@ if page == "Asset Dashboard":
 
         if show_rsi:
             st.subheader("""RSI Analysis""")
-            RSIgraph(data)
+            fig_4 = RSIgraph(data)
+            st.plotly_chart(fig_4)
 
 
     #Select the coin
