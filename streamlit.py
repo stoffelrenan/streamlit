@@ -302,8 +302,8 @@ if page == "Asset Dashboard":
         predictions = predict_coin(data.name, data)
         predicted_price_one = predictions[0][0]
         predicted_price_two = predictions[1][0]
-        delta_one = round(((predicted_price_one - current_price)/current_price)*100,2)
-        delta_two = round(((predicted_price_two - current_price)/current_price)*100,2)
+        delta_one = str(round(((predicted_price_one - current_price)/current_price)*100,2)) + '%'
+        delta_two = str(round(((predicted_price_two - current_price)/current_price)*100,2)) + '%'
         
         
 
