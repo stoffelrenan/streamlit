@@ -26,10 +26,11 @@ def local_css(file_name):
 local_css("style.css")
 
 
-def fib_retrace(data):
+def fib_retrace(currency):
+  
   # Fibonacci constants
-  max_value = data['close'].max()
-  min_value = data['close'].min()
+  max_value = currency['close'].max()
+  min_value = currency['close'].min()
   difference = max_value - min_value
 
   # Set Fibonacci levels
@@ -38,32 +39,36 @@ def fib_retrace(data):
   third_level = max_value - difference * 0.5
   fourth_level = max_value - difference * 0.618
 
+  # Print levels
+  #print('Percentage level\t Price')
+  #print('0.00%\t\t', round(max_value, 3))
+  #print('23.6\t\t', round(first_level, 3))
+  #print('38.2%\t\t', round(second_level, 3))
+  #print('50%\t\t', round(third_level, 3))
+  #print('61.8%\t\t', round(fourth_level, 3))
+  #print('100.00%\t\t', round(min_value, 3))
+
   # Plot Fibonacci graph
-  plot_title = 'Fibonacci Retracement for ' + data.name
+  plot_title = 'Fibonacci Retracement for ' + currency.name
   fig = plt.figure(figsize=(22.5, 12.5))
   plt.title(plot_title, fontsize=30)
   ax = fig.add_subplot(111)
-  plt.plot(data.index, data['close'])
+  plt.plot(currency.index, currency['close'])
   plt.axhline(max_value, linestyle='--', alpha=0.5, color='purple')
   ax.fill_between(currency.index, max_value, first_level, color='purple', alpha=0.2)
 
   # Fill sections
   plt.axhline(first_level, linestyle='--', alpha=0.5, color='blue')
-  ax.fill_between(data.index, first_level, second_level, color='blue', alpha=0.2)
-
+  ax.fill_between(currency.index, first_level, second_level, color='blue', alpha=0.2)
   plt.axhline(second_level, linestyle='--', alpha=0.5, color='green')
-  ax.fill_between(data.index, second_level, third_level, color='green', alpha=0.2)
-
+  ax.fill_between(currency.index, second_level, third_level, color='green', alpha=0.2)
   plt.axhline(third_level, linestyle='--', alpha=0.5, color='red')
-  ax.fill_between(data.index, third_level, fourth_level, color='red', alpha=0.2)
-
+  ax.fill_between(currency.index, third_level, fourth_level, color='red', alpha=0.2)
   plt.axhline(fourth_level, linestyle='--', alpha=0.5, color='orange')
-  ax.fill_between(data.index, fourth_level, min_value, color='orange', alpha=0.2)
-
+  ax.fill_between(currency.index, fourth_level, min_value, color='orange', alpha=0.2)
   plt.axhline(min_value, linestyle='--', alpha=0.5, color='yellow')
   plt.xlabel('Date', fontsize=20)
   plt.ylabel('Close Price (USD)', fontsize=20)
-  return fig
 
 #rsi function
 def computeRSI (data, time_window):
@@ -236,8 +241,7 @@ if page == "Asset Dashboard":
         if show_fibonacci:
             #Fibo Graph
             st.subheader("""Fibonacci plot for """ + selected_stock)
-            fig_3 = fib_retrace(data)
-            st.plotly_chart(fig_3)
+            fib_retrace(data)
 
         if show_rsi:
             st.subheader("""RSI Analysis""")
