@@ -182,6 +182,7 @@ def main():
     #get data on searched ticker
     data = yf.download(tickers=selected_stock+'-USD', period = '5y', interval = '1d')
     data.name=selected_stock
+    data['macd'] = data.get('macd')  # calculate MACD
     data.reset_index(inplace=True)
 
     # get current date data for searched ticker
