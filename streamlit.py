@@ -23,13 +23,6 @@ def local_css(file_name):
 #local css sheet
 local_css("style.css")
 
-#Select the coin
-st.sidebar.subheader("""Asset Dashboard""")
-selected_stock = st.sidebar.text_input("Enter a valid asset name...", "BTC")
-button_clicked = st.sidebar.button("Select Asset")
-if button_clicked == "Select Asset":
-    main()
-    
 # convert an array of values into a dataset matrix
 def create_dataset(dataset, time_step=1):
     dataX, dataY = [], []
@@ -233,6 +226,27 @@ def main():
     st.plotly_chart(fig_2)
 
     #define variable today
+    
+
+#Select the page
+st.sidebar.subheader("""Select the page""")
+# Create a page dropdown 
+page = st.sidebar.selectbox("Choose your page", ["Asset Dashboard", "Company Investments"])
+
+if page == "Asset Dashboard":
+
+    #Select the coin
+    st.sidebar.subheader("""Asset Dashboard""")
+    selected_stock = st.sidebar.text_input("Enter a valid asset name...", "BTC")
+    button_clicked = st.sidebar.button("Select Asset")
+    if button_clicked == "Select Asset":
+        main()
+        
+elif page == "Company Investments":
+    st.title(page)
+
+    
+
 
 
 
