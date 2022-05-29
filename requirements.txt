@@ -6,3 +6,4 @@ keras
 plotly
 xgboost
 ta
+stockstats
