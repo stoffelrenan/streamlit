@@ -164,12 +164,12 @@ def moving_average(data):
 
     data_macd = [trace1, trace2, trace3, trace4]
 
-    layout = dict(title=dict(text=data.name + ' MACD Strategy'),
+    layout_macd = dict(title=dict(text=selected_stock + ' MACD Strategy'),
                   xaxis=dict(title='Date'),
-                  yaxis=dict(title=data.name + ' MACD')
+                  yaxis=dict(title=selected_stock + ' MACD')
                   )
 
-    fig = go.Figure(data=data_macd, layout=layout)
+    fig = go.Figure(data=data_macd, layout=layout_macd)
     return fig
 
 
