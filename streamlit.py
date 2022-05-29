@@ -306,7 +306,7 @@ if page == "Asset Dashboard":
 
         col3.metric('Prediction for the day after tomorrow',str(predicted_price_two))
 
-        col4.metric("Volume traded last 24h", "1234")
+        col4.metric("Volume traded last 24h", str(data['volume'][-1]))
 
         #Candlestick
         st.subheader("""Candlestick plot for """ + selected_stock)
