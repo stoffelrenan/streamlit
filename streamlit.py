@@ -302,7 +302,7 @@ if page == "Asset Dashboard":
         predictions = predict_coin(data.name, data)
         predicted_price_one = predictions[0][0]
         predicted_price_two = predictions[1][0]
-        volume = data['volume'][-1]
+        volume = data['Volume'][-1]
 
 
         #defining 4 cards
