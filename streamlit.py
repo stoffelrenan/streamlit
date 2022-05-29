@@ -234,7 +234,21 @@ if page == "Asset Dashboard":
         layout_1 = go.Layout(title=data.name + ' Candlestick')
         fig_1 = go.Figure(data=data_1, layout=layout_1)
         st.plotly_chart(fig_1)
+        if show_macd:
+            #MACD graph
+            st.subheader("""MACD plot for """ + selected_stock)
+            fig_2 = moving_average(data)
+            st.plotly_chart(fig_2)
 
+        if show_fibonacci:
+            #Fibo Graph
+            st.subheader("""Fibonacci plot for """ + selected_stock)
+            fig_3 = fib_retrace(data)
+            st.plotly_chart(fig_3)
+
+        if show_rsi:
+            st.subheader("""RSI Analysis""")
+            RSIgraph(data)
 
 
     #Select the coin
@@ -248,21 +262,7 @@ if page == "Asset Dashboard":
     show_fibonacci = st.sidebar.checkbox('Fibonacci Analysis')
     show_rsi = st.sidebar.checkbox('RSI Analysis')
     
-    if show_macd:
-        #MACD graph
-        st.subheader("""MACD plot for """ + selected_stock)
-        fig_2 = moving_average(data)
-        st.plotly_chart(fig_2)
-        
-    if show_fibonacci:
-        #Fibo Graph
-        st.subheader("""Fibonacci plot for """ + selected_stock)
-        fig_3 = fib_retrace(data)
-        st.plotly_chart(fig_3)
-        
-    if show_rsi:
-        st.subheader("""RSI Analysis""")
-        RSIgraph(data)
+
   
     
 elif page == "Company Investments":
