@@ -5,5 +5,6 @@ tensorflow
 keras
 plotly
 xgboost
+matplotlib
 ta
 stockstats
