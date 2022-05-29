@@ -389,6 +389,7 @@ elif page == "Client Investments":
         new['Amount'] = df_client[client].values[:-1]
         fig = px.pie(new, values='Amount', names='Coin')
         st.plotly_chart(fig)
+        
     st.sidebar.subheader("""Client Investments""")
     client = st.sidebar.selectbox("Choose the client", ["Nikala", "Darra", "Senan", "Badão", "Mugo", "ALL"])
     coin = st.sidebar.selectbox("Choose the client's asset", ["ADA","ATOM","AVAX","AXS","BTC","ETH","LINK","LUNA1","MATIC","SOL"])
