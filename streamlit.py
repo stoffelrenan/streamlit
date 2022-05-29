@@ -27,8 +27,8 @@ local_css("style.css")
 
 def fib_retrace(data):
   # Fibonacci constants
-  max_value = data['close'].max()
-  min_value = data['close'].min()
+  max_value = data.Close.max()
+  min_value = data.Close.min()
   difference = max_value - min_value
 
   # Set Fibonacci levels
@@ -42,7 +42,7 @@ def fib_retrace(data):
   fig = plt.figure(figsize=(22.5, 12.5))
   plt.title(plot_title, fontsize=30)
   ax = fig.add_subplot(111)
-  plt.plot(data.index, data['close'])
+  plt.plot(data.index, data.Close)
   plt.axhline(max_value, linestyle='--', alpha=0.5, color='purple')
   ax.fill_between(currency.index, max_value, first_level, color='purple', alpha=0.2)
 
@@ -67,7 +67,7 @@ def fib_retrace(data):
 #rsi function
 def computeRSI (data, time_window):
     diff = data.diff(1).dropna() # diff in one field(one day)
-#this preservers dimensions off diff values
+    #this preservers dimensions off diff values
     up_chg = 0 * diff
     down_chg = 0 * diff
 
@@ -84,13 +84,13 @@ def computeRSI (data, time_window):
     return rsi
 def RSIgraph (currency): 
     df=currency.copy()
-    df['close']=computeRSI(df['close'], 14)
+    df.Close=computeRSI(df.Close, 14)
     #set the high and low lines (as columns)
     df['low'] = 30
     df['high'] = 70
     fig = go.Figure()
     #create lines/traces
-    fig.add_trace(go.Scatter(x=df.index, y=df['close'],
+    fig.add_trace(go.Scatter(x=df.index, y=df.Close,
                         mode='lines',
                         name=currency.name + ' Close Price',
                         line=dict(color="Blue", width=1),))
