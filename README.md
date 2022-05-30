@@ -33,18 +33,20 @@ or stocks;:
 Examples: 
 Apple Inc. - 'AAPL'
 Tesla 	   - 'TSLA'
-Bitcoin    - 'BTC'
+Bitcoin    - 'BTC-USD'
+Ethereum   - 'ETH-USD
 
-**Note:** the dashboard will return an error if the symbol does not exist. 
+**Note:** the dashboard will return an error if the symbol does not exist. Also, make sure to add the converted currency if you want to see a crypto asset. 
 
 ## Step 3: Customize your page 
 
 If you are on the Asset Overview page, you can select from a number of technical
 analysis indicators to show. 
-
+<img src=images/asset_page.png>
 If you are on the Client Investments page you can select which clients you would like to display
 data about. Because this is internal to Investments4Some, we have included client names, 
 but this can be changed if there are concerns over data privacy. 
+<img src=images/client_page.png>
 
 ## Resources: 
 
