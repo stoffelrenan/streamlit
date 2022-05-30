@@ -299,10 +299,8 @@ if page == "Asset Dashboard":
         data['macd'] = data.get('macd')  # calculate MACD
         #data.reset_index(inplace=True)
 
-        # get current date data for searched ticker
-        current_price = yf.Ticker(selected_stock)
-        current_price = current_price.info['regularMarketPrice']
- 
+        # get latest date data for searched ticker
+        current_price = data['close'][-1] 
 
         # get current date closing price for searched ticker
         predictions = predict_coin(data.name, data)
