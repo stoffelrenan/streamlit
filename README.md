@@ -1,5 +1,3 @@
-# streamlit
-
 # BC5: Cryptocurrency Data Visualization Dashboard
 
 **Group Name:** M Consulting
