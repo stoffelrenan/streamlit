@@ -334,7 +334,7 @@ if page == "Asset Dashboard":
         if show_macd:
             #MACD graph
             st.subheader("""MACD plot for """ + selected_stock)
-            st.caption('MACD is designed to reveal changes in the strength, direction, momentum, and duration of a trend in a stock\'s price..')
+            st.caption('MACD is designed to reveal changes in the strength, direction, momentum, and duration of a trend in a stock\'s price.')
             fig_2 = moving_average(data)
             st.write(fig_2, use_container_width=True)
 
