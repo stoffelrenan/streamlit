@@ -335,7 +335,7 @@ if page == "Asset Dashboard":
             #MACD graph
             st.subheader("""MACD plot for """ + selected_stock)
             fig_2 = moving_average(data)
-            st.pyplot(fig_2, use_container_width=True)
+            st.write(fig_2, use_container_width=True)
 
         if show_fibonacci:
             #Fibo Graph
