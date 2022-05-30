@@ -54,7 +54,7 @@ def create_dataset(dataset, time_step):
         data_y.append(dataset[i + time_step, 0])
     return np.array(data_x), np.array(data_y)
 
-def predict_coin(name,df,days=3,epochs=20):
+def predict_coin(name,df,days=5,epochs=30):
     
     scaler,df1 = lstm_close(df)
     
@@ -77,9 +77,9 @@ def predict_coin(name,df,days=3,epochs=20):
         
     #Create LSTM model using layers and dropout to avoid overfitting
     model=Sequential()
-    model.add(LSTM(5,activation='relu',return_sequences=True,input_shape=(days,1)))
-    model.add(LSTM(5,return_sequences=True))
-    model.add(LSTM(5))
+    model.add(LSTM(32,activation='relu',return_sequences=True,input_shape=(days,1)))
+    model.add(LSTM(32,return_sequences=True))
+    model.add(LSTM(32))
     model.add(Dense(1))
     model.compile(loss='mean_squared_error', optimizer='adam')
 
@@ -372,7 +372,7 @@ elif page == "Client Investments":
         df_curr.reset_index(inplace=True)
         df_curr = ta.add_all_ta_features(df_curr, "Open", "High", "Low", "Close", "Volume", fillna=True)
         df_client=pd.read_csv('clients.csv', index_col=0)
-        df_client.columns = ["Nikala", "Darra", "Senan", "Badão", "Mugo","ALL"]
+        df_client.columns = ["Nikala", "Darra", "Lenan", "Badão", "Mugo","ALL"]
         # get current date data for searched ticker
         current_price = yf.Ticker(coin + '-USD')
         current_price = current_price.info['regularMarketPrice']
@@ -457,7 +457,7 @@ elif page == "Client Investments":
 
 
     st.sidebar.subheader("""Client Investments""")
-    client = st.sidebar.selectbox("Choose the client", ["Nikala", "Darra", "Senan", "Badão", "Mugo", "ALL"])
+    client = st.sidebar.selectbox("Choose the client", ["Nikala", "Darra", "Lenan", "Badão", "Mugo", "ALL"])
     coin = st.sidebar.selectbox("Choose the client's asset", ["ADA","ATOM","AVAX","AXS","BTC","ETH","LINK","LUNA1","MATIC","SOL"])
     #table of all assets and values
 
