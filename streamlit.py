@@ -233,7 +233,7 @@ def RSIgraph (currency):
 
 def moving_average(data):
     data = StockDataFrame.retype(data)
-    data['macd'] = data.get('macd') # calculate MACD
+    data['macds'] = data.get('macds') # calculate MACD
 
     trace1 = dict(type='scatter',
                   x=data.index,
