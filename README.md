@@ -17,7 +17,7 @@ this dashboard can grow with their client portfolios.
 
 ## Step 1: Select a page
 
-<img src='images/select_page.png'>
+<img src='images/choose_page.png'>
 The two page options are the asset overview, which provides the preditions for the 
 selected coin for tomorrow and the day after tomorrow, a candlestick plot with 
 adjustable timeline, and options for additional technical analysis indicators. 
