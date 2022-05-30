@@ -300,7 +300,7 @@ if page == "Asset Dashboard":
         #data.reset_index(inplace=True)
 
         # get latest date data for searched ticker
-        current_price = data['close'][-1] 
+        current_price = data['Close'][-1] 
 
         # get current date closing price for searched ticker
         predictions = predict_coin(data.name, data)
