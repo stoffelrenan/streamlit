@@ -334,18 +334,21 @@ if page == "Asset Dashboard":
         if show_macd:
             #MACD graph
             st.subheader("""MACD plot for """ + selected_stock)
+            st.caption('MACD is designed to reveal changes in the strength, direction, momentum, and duration of a trend in a stock\'s price..')
             fig_2 = moving_average(data)
             st.write(fig_2, use_container_width=True)
 
         if show_fibonacci:
             #Fibo Graph
             st.subheader("""Fibonacci plot for """ + selected_stock)
+            st.caption('Fibonacci retracement levels indicate key areas where a stock may reverse or stall.')
             fig_3 = fib_retrace(data)
             st.write(fig_3, use_container_width=True)
 
 
         if show_rsi:
             st.subheader("""RSI Analysis""")
+            st.caption('RSI is a momentum indicator that measures the magnitude of recent price changes to analyze overbought or oversold conditions.')
             fig_4 = RSIgraph(data)
             st.plotly_chart(fig_4, use_container_width=True)
 
