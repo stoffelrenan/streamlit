@@ -294,13 +294,13 @@ if page == "Asset Dashboard":
     def main():
         st.title("Asset Dashboard: "+ selected_stock)
         #get data on searched ticker
-        data = yf.download(tickers=selected_stock+'-USD', period = '5y', interval = '1d')
+        data = yf.download(tickers=selected_stock, period = '5y', interval = '1d')
         data.name=selected_stock
         data['macd'] = data.get('macd')  # calculate MACD
         #data.reset_index(inplace=True)
 
         # get current date data for searched ticker
-        current_price = yf.Ticker(selected_stock + '-USD')
+        current_price = yf.Ticker(selected_stock)
         current_price = current_price.info['regularMarketPrice']
  
 
@@ -354,7 +354,7 @@ if page == "Asset Dashboard":
 
     #Select the coin
     st.sidebar.subheader("""Asset Dashboard""")
-    selected_stock = st.sidebar.text_input("Enter a valid asset name...", "BTC")
+    selected_stock = st.sidebar.text_input("Enter a valid asset name... (with -USD for cryptos)", "BTC-USD")
     button_clicked = st.sidebar.button("Select Asset")
     if button_clicked == "Select Asset":
         main()
