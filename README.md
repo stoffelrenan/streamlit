@@ -17,6 +17,7 @@ this dashboard can grow with their client portfolios.
 
 ## Step 1: Select a page
 
+<img src='images/select_page.png'>
 The two page options are the asset overview, which provides the preditions for the 
 selected coin for tomorrow and the day after tomorrow, a candlestick plot with 
 adjustable timeline, and options for additional technical analysis indicators. 
@@ -27,6 +28,7 @@ days based on % change.
 
 ## Step 2: Type in asset name
 
+<img src='images/select_asset.png'>
 This dashboard is designed to accept any yahoo finance symbol, including cryptocurrencies 
 or stocks;:
 
@@ -42,12 +44,14 @@ Ethereum   - 'ETH-USD
 
 If you are on the Asset Overview page, you can select from a number of technical
 analysis indicators to show. 
+
 <img src=images/asset_page.png>
+
 If you are on the Client Investments page you can select which clients you would like to display
 data about. Because this is internal to Investments4Some, we have included client names, 
 but this can be changed if there are concerns over data privacy. 
+<img src='images/select_client.png'>
 <img src=images/client_page.png>
-
 ## Resources: 
 
 This dashboard was created and hosted in the cloud using [Streamlit](https://streamlit.io/)
