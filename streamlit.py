@@ -413,7 +413,7 @@ elif page == "Client Investments":
         col2_2.plotly_chart(fig, use_container_width=True)
 
         #area plot
-        col2_1.subheader('Client Asset Profit')
+        col2_1.subheader('Client Asset Profit (USD)')
 
         # area plot total value over time since client
         dayswus = df_client[client]["dayswus"]
