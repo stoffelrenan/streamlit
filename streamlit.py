@@ -426,7 +426,7 @@ elif page == "Client Investments":
         #plot
         area_fig = go.Figure()
         area_fig.add_trace(
-            go.Scatter(x=df_area["Date"], y=df_area["Value"], fill='tozeroy', line_color='slategrey', mode='lines',
+            go.Scatter(x=df_area["Date"], y=df_area["Value"], fill='tozeroy', line_color='slategrey', mode='line',
                        showlegend=False))
 
         # hard-code the axes
