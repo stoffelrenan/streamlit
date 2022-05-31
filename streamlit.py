@@ -413,7 +413,7 @@ elif page == "Client Investments":
         col2_2.plotly_chart(fig, use_container_width=True)
 
         #area plot
-        col2_1.subheader('Client Asset Profit (USD)')
+        col2_1.subheader('Client Asset Value')
 
         # area plot total value over time since client
         dayswus = df_client[client]["dayswus"]
@@ -426,7 +426,7 @@ elif page == "Client Investments":
         #plot
         area_fig = go.Figure()
         area_fig.add_trace(
-            go.Scatter(x=df_area["Date"], y=df_area["Value"], fill='tozeroy', line_color='slategrey', mode='line',
+            go.Scatter(x=df_area["Date"], y=df_area["Value"], fill='tozeroy', line_color='slategrey', mode='lines',
                        showlegend=False))
 
         # hard-code the axes
