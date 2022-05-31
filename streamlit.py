@@ -427,7 +427,7 @@ elif page == "Client Investments":
         area_fig = go.Figure()
         area_fig.add_trace(
             go.Scatter(x=df_area["Date"], y=df_area["Value"], fill='tozeroy', line_color='slategrey', mode='lines',
-                       showlegend=False, labels=dict( y="USD")))
+                       showlegend=False))
 
         # hard-code the axes
         area_fig.update_xaxes(range=[df_area["Date"].min(), df_area["Date"].max()])
